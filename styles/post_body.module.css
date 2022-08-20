@@ -1,0 +1,94 @@
+.post_body p {
+  font-size: 18px;
+  margin: 20px 0;
+  line-height: 28px;
+}
+
+.post_body h2 {
+  font-size: 28px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.post_body h3 {
+  font-size: 22px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.post_body h4 {
+  font-size: 20px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.post_body h5 {
+  font-size: 18px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.post_body h6 {
+  font-size: 14px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.post_body ol {
+  list-style: numeric;
+  font-size: 18px;
+  margin: 20px 0;
+  padding-left: 32px;
+}
+.post_body ol li {
+  margin: 12px 0;
+  line-height: 28px;
+}
+
+.post_body ul {
+  list-style: initial;
+  font-size: 18px;
+  margin: 20px 0;
+  padding-left: 32px;
+}
+.post_body ul li {
+  margin: 12px 0;
+  line-height: 28px;
+}
+
+.post_body blockquote {
+  padding: 24px;
+  margin: 20px 0;
+  border-left: 4px solid #0070f3;
+  background-color: #eff6ff;
+}
+
+.post_body blockquote p {
+  margin: 0;
+}
+.post_body a {
+  text-decoration: underline;
+  color: #0070f3;
+  transition: opacity 0.2s ease-in;
+}
+.post_body a:hover {
+  opacity: 0.7;
+}
+.post_body code {
+  color: #ff79c6;
+}
+
+.post_body pre {
+  background-color: #282a36;
+  padding: 24px;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+.post_body pre code {
+  background-color: transparent;
+  color: white;
+}
+
+.post_body img {
+  width: 100%;
+}

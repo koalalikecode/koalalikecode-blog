@@ -1,26 +1,78 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+@layer base {
+  html,
   body {
-    color: white;
-    background: black;
+    font-family: "Noto Serif", serif;
+  }
+
+  h1 {
+    font-family: "Montserrat", sans-serif;
+  }
+  h2,
+  h3,
+  h4,
+  h5,
+  h6, a {
+    font-family: "Noto Sans", sans-serif;
+  }
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  .related-post::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  /* Track */
+  .related-post::-webkit-scrollbar-track {
+    background: rgb(239 246 255); 
+  }
+  
+  /* Handle */
+  .related-post::-webkit-scrollbar-thumb {
+    background: rgb(191 219 254); 
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  .related-post::-webkit-scrollbar-thumb:hover {
+    background: rgb(59 130 246); 
+  }
+
+  @media (max-width: 639px) {
+    ::-webkit-scrollbar {
+      height: 0px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent; 
+    }
+    .related-post::-webkit-scrollbar {
+      height: 0px;
+    }
+    .related-post::-webkit-scrollbar-track {
+      background: transparent; 
+    }
   }
 }
