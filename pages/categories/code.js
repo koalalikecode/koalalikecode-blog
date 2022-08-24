@@ -3,18 +3,10 @@ import Post from "../../components/post";
 import SideBar from "../../components/sidebar";
 import db from "../../config/db/index";
 import BlogPost from "../../models/Post";
+import readTime from "../../utils/read-time";
+import { formatDate } from "../../utils/lib";
 
 export default function Code({ posts, tags }) {
-  function formatDate(date) {
-    let res = new Date(date);
-    return (
-      res.getDate() +
-      "/" +
-      (Number(res.getMonth()) + 1).toString() +
-      "/" +
-      res.getFullYear()
-    );
-  }
   return (
     <div>
       <Layout active="code">
@@ -29,9 +21,9 @@ export default function Code({ posts, tags }) {
                   key={post._id}
                   image={post.thumbnail}
                   title={post.title}
-                  description="Chỉ với một số thẻ HTML thông dụng, bạn đã hoàn toàn có thể tạo riêng cho mình một trang web đơn giản."
+                  description={post.description}
                   time={formatDate(post.createdAt)}
-                  comment="3 Bình luận"
+                  read_duration={`${readTime(post.content)} phút đọc`}
                   link={`/blogs/${post.slug}`}
                   tags={post.tags}
                 />
@@ -50,7 +42,7 @@ export default function Code({ posts, tags }) {
 
 export async function getStaticProps() {
   await db.connect();
-  let posts = await BlogPost.find();
+  let posts = await BlogPost.find({categories: 'code'});
   let tags = [];
   posts = JSON.parse(JSON.stringify(posts));
   posts.forEach((post) => {
