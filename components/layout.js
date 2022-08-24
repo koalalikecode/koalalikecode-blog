@@ -15,14 +15,14 @@ export default function Layout({ children, active }) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="blog cá nhân" />
-        <title>Koalalikecode</title>
+        <title>koalalikecode</title>
       </Head>
       <header className="sticky top-0 bg-white z-10">
         <nav className="py-4 shadow-md shadow-black/10">
           <div className="max-w-6xl mx-auto px-4 flex items-center lg:max-w-4xl sm:max-w-lg">
             <Link href="/">
-              <a className="grow text-xl font-bold font-sans">
-              Koalalikecode
+              <a className="grow text-xl font-bold">
+              koalalikecode
               </a>
             </Link>
             
@@ -38,7 +38,7 @@ export default function Layout({ children, active }) {
                   Home
                 </a>
               </Link>
-              <Link href="/categories/coding">
+              <Link href="/categories/code">
                 <a
                   className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
                     active == "code"
@@ -49,7 +49,7 @@ export default function Layout({ children, active }) {
                   Coding Posts
                 </a>
               </Link>
-              <Link href="#">
+              <Link href="/categories/life">
                 <a
                   className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
                     active == "life"
@@ -108,7 +108,7 @@ export default function Layout({ children, active }) {
             
           </div>
           <div>
-            <p className="flex items-center sm:text-sm opacity-70 font-sans"><AiOutlineCopyright className="mr-1 text-sm"/>2022 KOALALIKECODE</p>
+            <p className="flex items-center sm:text-sm opacity-70"><AiOutlineCopyright className="mr-1 text-sm"/>2022 koalalikecode</p>
           </div>
         </div>
       </footer>

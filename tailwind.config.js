@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         'blue-550': '#0070f3'
       },
+      transitionProperty: {
+        'width': 'width',
+      },
     },
     fontFamily: {
       'sans': ['Noto Sans', 'sans-serif'],

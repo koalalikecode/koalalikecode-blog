@@ -11,11 +11,14 @@
   "dependencies": {
     "dracula-prism": "^2.1.13",
     "marked": "^4.0.18",
+    "mongoose": "^6.5.2",
+    "mongoose-slug-generator": "^1.0.4",
     "next": "12.2.5",
     "prismjs": "^1.28.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",

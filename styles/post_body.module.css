@@ -1,19 +1,21 @@
 .post_body p {
   font-size: 18px;
   margin: 20px 0;
-  line-height: 28px;
+  line-height: 32px;
 }
 
 .post_body h2 {
   font-size: 28px;
   margin: 20px 0;
   font-weight: bold;
+  scroll-margin-top: 5rem;
 }
 
 .post_body h3 {
   font-size: 22px;
   margin: 20px 0;
   font-weight: bold;
+  scroll-margin-top: 5rem;
 }
 
 .post_body h4 {
@@ -42,7 +44,7 @@
 }
 .post_body ol li {
   margin: 12px 0;
-  line-height: 28px;
+  line-height: 32px;
 }
 
 .post_body ul {
@@ -53,7 +55,7 @@
 }
 .post_body ul li {
   margin: 12px 0;
-  line-height: 28px;
+  line-height: 32px;
 }
 
 .post_body blockquote {
@@ -91,4 +93,11 @@
 
 .post_body img {
   width: 100%;
+}
+
+@supports (-webkit-hyphens:none) {
+  .post_body h2, .post_body h3 {
+      padding-top: 5rem;
+      margin-top: -5rem;
+  }
 }
