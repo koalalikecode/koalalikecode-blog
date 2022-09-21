@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { BiTimeFive, BiCommentDetail } from "react-icons/bi";
-import { VscSymbolKeyword } from "react-icons/vsc"
+import { VscSymbolKeyword } from "react-icons/vsc";
 
 export default function Post({
   image,
@@ -20,7 +20,7 @@ export default function Post({
           width={144}
           height={110}
           alt="name"
-          className="rounded-xl ease-in duration-300"
+          className="rounded-xl ease-in duration-200 hover:opacity-70"
         />
       </a>
       <div className="ml-4 w-2/3 sm:w-full">

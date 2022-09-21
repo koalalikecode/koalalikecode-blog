@@ -9,7 +9,7 @@ import Post2 from "../../components/post_2";
 import Post from "../../models/Post";
 import db from "../../config/db/index";
 import readTime from "../../utils/read-time";
-import { formatDate } from "../../utils/lib"
+import { formatDate } from "../../utils/lib";
 import { useState, useEffect } from "react";
 
 export default function BlogPost({ postData, relatedDatas }) {
@@ -52,6 +52,7 @@ export default function BlogPost({ postData, relatedDatas }) {
     });
     setToc(getHeadingList(elements));
   }, []);
+
   return (
     <Layout>
       <Head>
@@ -72,7 +73,7 @@ export default function BlogPost({ postData, relatedDatas }) {
           </div>
           <div className="w-full">
             <Image
-              src="https://i.postimg.cc/PrXv9R9b/HTML-thumbnail.png"
+              src={postData.thumbnail}
               width={144}
               height={80}
               layout="responsive"
@@ -84,15 +85,14 @@ export default function BlogPost({ postData, relatedDatas }) {
             dangerouslySetInnerHTML={{ __html: marked.parse(intro) }}
           />
           <div className="mt-5 py-8 sm:py-4">
-            {postData.tags.map((tag) => (
-            <a
-              key=""
-              href="#"
-              className="rounded-md px-3 py-1 mr-2 bg-gray-100 text-gray-500 hover:bg-blue-50 hover:text-blue-550 ease-in duration-300"
-            >
-              {tag}
-            </a>
-
+            {postData.tags.map((tag, index) => (
+              <a
+                key={index}
+                href="#"
+                className="rounded-md px-3 py-1 mr-2 bg-gray-100 text-gray-500 hover:bg-blue-50 hover:text-blue-550 ease-in duration-300"
+              >
+                {tag}
+              </a>
             ))}
           </div>
         </div>
