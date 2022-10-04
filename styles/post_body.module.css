@@ -78,6 +78,7 @@
 }
 .post_body code {
   color: #ff79c6;
+  overflow-wrap: break-word;
 }
 
 .post_body pre {
@@ -95,9 +96,10 @@
   width: 100%;
 }
 
-@supports (-webkit-hyphens:none) {
-  .post_body h2, .post_body h3 {
-      padding-top: 5rem;
-      margin-top: -5rem;
+@supports (-webkit-hyphens: none) {
+  .post_body h2,
+  .post_body h3 {
+    padding-top: 5rem;
+    margin-top: -5rem;
   }
 }

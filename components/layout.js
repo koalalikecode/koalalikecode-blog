@@ -10,6 +10,9 @@ import {
 import { useState } from "react";
 import Prism from "prismjs";
 import "prismjs/components/prism-jsx.min";
+import "prismjs/components/prism-scss.min";
+import "prismjs/components/prism-sass";
+import "prismjs/components/prism-bash";
 import "prismjs/plugins/unescaped-markup/prism-unescaped-markup.min.js";
 import { useEffect } from "react";
 
@@ -21,7 +24,7 @@ export default function Layout({ children, active }) {
   return (
     <>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
         <meta name="description" content="blog cá nhân" />
         <title>koalalikecode</title>
       </Head>

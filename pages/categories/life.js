@@ -5,13 +5,17 @@ import db from "../../config/db/index";
 import BlogPost from "../../models/Post";
 import readTime from "../../utils/read-time";
 import { formatDate } from "../../utils/lib";
+import Head from "next/head";
 
 export default function Life({ posts, tags }) {
   return (
     <div>
       <Layout active="life">
+        <Head>
+          <title>Chuyện cuộc sống - koalalikecode</title>
+        </Head>
         <h2 className="text-3xl font-mon font-bold mt-5 mb-14 sm:mb-10">
-          Chuyện cuộc sống
+          🎹 Chuyện cuộc sống
         </h2>
         <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-none lg:gap-x-0">
           <div className="col-span-2 lg:order-2">
@@ -42,7 +46,7 @@ export default function Life({ posts, tags }) {
 
 export async function getStaticProps() {
   await db.connect();
-  let posts = await BlogPost.find({categories: 'life'});
+  let posts = await BlogPost.find({ categories: "life" });
   let tags = [];
   posts = JSON.parse(JSON.stringify(posts));
   posts.forEach((post) => {
