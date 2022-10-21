@@ -24,7 +24,7 @@ export default function Layout({ children, active }) {
   return (
     <>
       <Head>
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="blog cá nhân" />
         <title>koalalikecode</title>
       </Head>
