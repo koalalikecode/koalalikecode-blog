@@ -1,7 +1,7 @@
 import Layout from "../../components/layout";
 import Head from "next/head";
 import Image from "next/image";
-import { BiTimeFive } from "react-icons/bi";
+import { BiChevronUpSquare, BiTimeFive } from "react-icons/bi";
 import { VscSymbolKeyword } from "react-icons/vsc";
 import { marked } from "marked";
 import postStyles from "../../styles/post_body.module.css";
@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 export default function BlogPost({ postData, relatedDatas }) {
   const intro = postData.content;
   const [toc, setToc] = useState([]);
+  const [windowOffSetY, setWindowOffSetY] = useState(0);
 
   function getHeadingList(elements) {
     const list = [];
@@ -35,6 +36,17 @@ export default function BlogPost({ postData, relatedDatas }) {
     return list;
   }
 
+  // check when scroll to a specific heading content
+  function checkPositionHeading(heading, index, array) {
+    return (
+      windowOffSetY + 200 >= document.getElementById(heading.id).offsetTop &&
+      (array[index + 1]
+        ? windowOffSetY + 200 <
+          document.getElementById(array[index + 1].id).offsetTop
+        : true)
+    );
+  }
+
   useEffect(() => {
     const elements = Array.from(
       document.querySelectorAll(".post-body h2, .post-body h3")
@@ -51,6 +63,12 @@ export default function BlogPost({ postData, relatedDatas }) {
       }
     });
     setToc(getHeadingList(elements));
+  }, []);
+
+  useEffect(() => {
+    document.onscroll = () => {
+      setWindowOffSetY(window.pageYOffset);
+    };
   }, []);
 
   return (
@@ -98,10 +116,14 @@ export default function BlogPost({ postData, relatedDatas }) {
         </div>
         <div className="lg:hidden pb-28 pl-8">
           <ul className="sticky top-20 pl-4 border-l border-gray-200">
-            {toc.map((h2Heading) => (
+            {toc.map((h2Heading, index) => (
               <li className="" key={h2Heading.id}>
                 <a
-                  className="block leading-7 after:rounded relative after:absolute after:w-0 after:top-6 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-blue-550"
+                  className={`block leading-7 after:rounded relative after:absolute after:w-0 after:top-6 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-blue-550 ${
+                    checkPositionHeading(h2Heading, index, toc)
+                      ? "text-blue-550"
+                      : ""
+                  }`}
                   href={`#${h2Heading.id}`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -114,9 +136,13 @@ export default function BlogPost({ postData, relatedDatas }) {
                 </a>
                 {h2Heading.items.length > 0 && (
                   <ul className="ml-5">
-                    {h2Heading.items.map((child) => (
+                    {h2Heading.items.map((child, index) => (
                       <li
-                        className="after:rounded relative after:absolute after:w-0 after:bottom-0 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-purple-500"
+                        className={`after:rounded relative after:absolute after:w-0 after:bottom-0 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-purple-500 ${
+                          checkPositionHeading(child, index, h2Heading.items)
+                            ? "text-purple-500"
+                            : ""
+                        }`}
                         key={child.id}
                       >
                         <a
