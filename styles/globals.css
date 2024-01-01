@@ -12,16 +12,16 @@
 
   .dark {
     --text-color: white;
-    --background-color: rgb(15 23 42);
-    --blockquote-color: rgb(15 23 42);
+    --background-color: #0f172a;
+    --blockquote-color: #0f172a;
   }
   html,
   body {
     font-family: "Montserrat", sans-serif;
   }
 
-  header,
-  #layout {
+  #layout,
+  #menu {
     color: var(--text-color);
     background-color: var(--background-color);
   }

@@ -26,21 +26,28 @@ export default function Layout({ children, active }) {
   const [menu, setMenu] = useState(false);
   const { theme, setTheme } = useContext(ThemeContext);
   return (
-    <div className={theme} id="layout">
+    <div className={`${theme} transition-colors duration-500`} id="layout">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="blog cá nhân" />
         <title>koalalikecode</title>
       </Head>
-      <header className="sticky top-0 z-10">
-        <nav className="py-4 shadow-md shadow-black/10">
+      <header
+        className={`sticky top-0 z-10 backdrop-blur transition-colors duration-500 border-b supports-backdrop-blur:bg-white/60 ${
+          theme === "dark"
+            ? "border-slate-50/[0.06] bg-[#0f172a]/90"
+            : "bg-white/95 border-slate-900/10"
+        }`}
+      >
+        <nav className="py-4">
           <div className="max-w-6xl mx-auto px-4 flex items-center lg:max-w-4xl sm:max-w-lg">
             <Link href="/">
               <a className="grow text-xl font-bold">koalalikecode</a>
             </Link>
 
             <div
-              className={`md:absolute md:top-14 md:flex-col md:bg-white md:inset-x-0 md:shadow-md md:shadow-black/10 ${
+              id="menu"
+              className={`md:absolute transition-colors duration-500 md:top-14 md:flex-col md:inset-x-0 md:shadow-md md:shadow-black/10 ${
                 menu ? "md:flex md:animate-fade-down" : "md:hidden"
               }`}
             >
