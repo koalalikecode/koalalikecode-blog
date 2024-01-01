@@ -17,7 +17,7 @@ export default function SideBar({ tags }) {
           <AiOutlineSearch className="fill-white text-lg" />
         </button>
       </form>
-      <h2 className="text-xl font-mon font-semibold opacity-80 mb-5">Chủ đề</h2>
+      <h2 className="text-xl font-mon font-semibold opacity-80 mb-5">Tags</h2>
       <div className="flex flex-wrap mb-8">
         {tags.map((tag) => (
           <a

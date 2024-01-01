@@ -62,7 +62,7 @@
   padding: 24px;
   margin: 20px 0;
   border-left: 4px solid #0070f3;
-  background-color: #eff6ff;
+  background-color: var(--blockquote-color);
 }
 
 .post_body blockquote p {
@@ -94,6 +94,20 @@
 
 .post_body img {
   width: 100%;
+}
+
+.post_body tbody tr:not(:last-child) {
+  border-bottom: 1px solid var(--text-color);
+}
+.post_body thead tr {
+  border-bottom: 1px solid var(--text-color);
+}
+
+.post_body tr td:not(:last-child) {
+  border-right: 1px solid var(--text-color);
+}
+.post_body tr td {
+  padding: 4px 8px;
 }
 
 @supports (-webkit-hyphens: none) {

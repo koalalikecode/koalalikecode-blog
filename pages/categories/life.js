@@ -12,10 +12,10 @@ export default function Life({ posts, tags }) {
     <div>
       <Layout active="life">
         <Head>
-          <title>Chuyện cuộc sống - koalalikecode</title>
+          <title>Life Stories - koalalikecode</title>
         </Head>
         <h2 className="text-3xl font-mon font-bold mt-5 mb-14 sm:mb-10">
-          🎹 Chuyện cuộc sống
+          🎹 Life Stories
         </h2>
         <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-none lg:gap-x-0">
           <div className="col-span-2 lg:order-2">

@@ -1,27 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Sen:wght@400;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Sen:wght@400;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --text-color: black;
+    --background-color: white;
+    --blockquote-color: #eff6ff;
+  }
+
+  .dark {
+    --text-color: white;
+    --background-color: rgb(15 23 42);
+    --blockquote-color: rgb(15 23 42);
+  }
   html,
   body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  header,
+  #layout {
+    color: var(--text-color);
+    background-color: var(--background-color);
   }
 
   ::selection {
     background: rgb(192 132 252);
-    color: white; 
+    color: white;
   }
   ::-moz-selection {
-      background: rgb(192 132 252);
-      color: white; 
-
+    background: rgb(192 132 252);
+    color: white;
   }
   ::-webkit-selection {
-      background: rgb(192 132 252);
-      color: white; 
-
+    background: rgb(192 132 252);
+    color: white;
   }
   /* width */
   ::-webkit-scrollbar {
@@ -31,18 +46,18 @@
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
   }
-  
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
     border-radius: 10px;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
   }
 
   .related-post::-webkit-scrollbar {
@@ -51,18 +66,18 @@
 
   /* Track */
   .related-post::-webkit-scrollbar-track {
-    background: rgb(239 246 255); 
+    background: rgb(239 246 255);
   }
-  
+
   /* Handle */
   .related-post::-webkit-scrollbar-thumb {
-    background: rgb(191 219 254); 
+    background: rgb(191 219 254);
     border-radius: 10px;
   }
 
   /* Handle on hover */
   .related-post::-webkit-scrollbar-thumb:hover {
-    background: rgb(59 130 246); 
+    background: rgb(59 130 246);
   }
 
   @media (max-width: 639px) {
@@ -70,13 +85,13 @@
       height: 0px;
     }
     ::-webkit-scrollbar-track {
-      background: transparent; 
+      background: transparent;
     }
     .related-post::-webkit-scrollbar {
       height: 0px;
     }
     .related-post::-webkit-scrollbar-track {
-      background: transparent; 
+      background: transparent;
     }
   }
 }

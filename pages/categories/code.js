@@ -12,10 +12,10 @@ export default function Code({ posts, tags }) {
     <div>
       <Layout active="code">
         <Head>
-          <title>Bài viết lập trình - koalalikecode</title>
+          <title>Coding Posts - koalalikecode</title>
         </Head>
         <h2 className="text-3xl font-mon font-bold mt-5 mb-14 sm:mb-10">
-          👨‍💻 Bài viết lập trình
+          👨‍💻 Coding Posts
         </h2>
         <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-none lg:gap-x-0">
           <div className="col-span-2 lg:order-2">

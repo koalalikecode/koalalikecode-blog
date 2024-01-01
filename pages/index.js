@@ -11,7 +11,7 @@ export default function Home({ posts, tags }) {
     <div>
       <Layout active="home">
         <h2 className="text-3xl font-mon font-bold mt-5 mb-14 sm:mb-10">
-          📖 Tổng hợp bài viết
+          📖 Latest blogs
         </h2>
         <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-none lg:gap-x-0">
           <div className="col-span-2 lg:order-2">
