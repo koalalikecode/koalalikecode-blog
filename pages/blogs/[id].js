@@ -1,7 +1,7 @@
 import Layout from "../../components/layout";
 import Head from "next/head";
 import Image from "next/image";
-import { BiChevronUpSquare, BiTimeFive } from "react-icons/bi";
+import { BiTimeFive } from "react-icons/bi";
 import { VscSymbolKeyword } from "react-icons/vsc";
 import { marked } from "marked";
 import postStyles from "../../styles/post_body.module.css";
@@ -36,14 +36,34 @@ export default function BlogPost({ postData, relatedDatas }) {
     return list;
   }
 
-  // check when scroll to a specific heading content
-  function checkPositionHeading(heading, index, array) {
+  // check when scroll to a specific first heading content
+  function checkFirstPositionHeading(heading, index, array) {
+    const currentPosition = windowOffSetY + 200;
+    const curElementPosition = document.getElementById(heading.id).offsetTop;
+    const nextElementPositionCheck = array[index + 1]
+      ? currentPosition < document.getElementById(array[index + 1].id).offsetTop
+      : true;
+
+    return currentPosition >= curElementPosition && nextElementPositionCheck;
+  }
+
+  function checkChildPositionHeading(heading, index, parent, parentIndex) {
+    const currentPosition = windowOffSetY + 200;
+    const curElementPosition = document.getElementById(heading.id).offsetTop;
+
+    const nextElementPositionCheck = parent[index + 1]
+      ? currentPosition <
+        document.getElementById(parent[index + 1].id).offsetTop
+      : true;
+    const nextParentElementPositionCheck = toc[parentIndex + 1]
+      ? currentPosition <
+        document.getElementById(toc[parentIndex + 1].id).offsetTop
+      : true;
+
     return (
-      windowOffSetY + 200 >= document.getElementById(heading.id).offsetTop &&
-      (array[index + 1]
-        ? windowOffSetY + 200 <
-          document.getElementById(array[index + 1].id).offsetTop
-        : true)
+      currentPosition >= curElementPosition &&
+      nextElementPositionCheck &&
+      nextParentElementPositionCheck
     );
   }
 
@@ -67,7 +87,7 @@ export default function BlogPost({ postData, relatedDatas }) {
 
   useEffect(() => {
     document.onscroll = () => {
-      setWindowOffSetY(window.pageYOffset);
+      setWindowOffSetY(window.scrollY);
     };
   }, []);
 
@@ -120,7 +140,7 @@ export default function BlogPost({ postData, relatedDatas }) {
               <li className="" key={h2Heading.id}>
                 <a
                   className={`block leading-7 after:rounded relative after:absolute after:w-0 after:top-6 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-blue-550 ${
-                    checkPositionHeading(h2Heading, index, toc)
+                    checkFirstPositionHeading(h2Heading, index, toc)
                       ? "text-blue-550"
                       : ""
                   }`}
@@ -136,10 +156,15 @@ export default function BlogPost({ postData, relatedDatas }) {
                 </a>
                 {h2Heading.items.length > 0 && (
                   <ul className="ml-5">
-                    {h2Heading.items.map((child, index) => (
+                    {h2Heading.items.map((child, childIndex) => (
                       <li
                         className={`after:rounded relative after:absolute after:w-0 after:bottom-0 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-purple-500 ${
-                          checkPositionHeading(child, index, h2Heading.items)
+                          checkChildPositionHeading(
+                            child,
+                            childIndex,
+                            h2Heading.items,
+                            index
+                          )
                             ? "text-purple-500"
                             : ""
                         }`}
