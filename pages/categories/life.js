@@ -13,12 +13,29 @@ export default function Life({ posts, tags }) {
       <Layout active="life">
         <Head>
           <title>Life Stories - koalalikecode</title>
+          <meta property="og:title" content="Life Stories - koalalikecode" />
+          <meta
+            name="description"
+            content="Life Stories | koalalikecode personal blog"
+          />
+          <meta
+            name="keywords"
+            content="personal blog, blog, blog cá nhân, koalalikecode, life"
+          />
+          <meta
+            property="og:description"
+            content="Life Stories | koalalikecode personal blog"
+          />
+          <meta
+            property="og:image"
+            content="https://i.postimg.cc/Kj3xdQqQ/koalalikecode2.png"
+          />
         </Head>
         <h2 className="text-3xl font-mon font-bold mt-5 mb-14 sm:mb-10">
           🎹 Life Stories
         </h2>
-        <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-none lg:gap-x-0">
-          <div className="col-span-2 lg:order-2">
+        <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-1 lg:gap-x-0">
+          <div className="col-span-2 lg:col-span-1 lg:order-2">
             {posts
               .map((post) => (
                 <Post

@@ -95,6 +95,11 @@ export default function BlogPost({ postData, relatedDatas }) {
     <Layout>
       <Head>
         <title>{postData.title}</title>
+        <meta property="og:title" content={postData.title} />
+        <meta name="keywords" content={postData.title} />
+        <meta name="description" content={postData.description} />
+        <meta property="og:description" content={postData.description} />
+        <meta property="og:image" content={postData.thumbnail} />
       </Head>
       <section className="grid grid-cols-3 gap-x-12 lg:block mt-10">
         <div className="col-span-2">
@@ -121,7 +126,7 @@ export default function BlogPost({ postData, relatedDatas }) {
           <div
             className={`${postStyles.post_body} post-body`}
             dangerouslySetInnerHTML={{ __html: marked.parse(intro) }}
-          />
+          ></div>
           <div className="mt-5 py-8 sm:py-4">
             {postData.tags.map((tag, index) => (
               <a

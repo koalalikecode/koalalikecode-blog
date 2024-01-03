@@ -29,8 +29,7 @@ export default function Layout({ children, active }) {
     <div className={`${theme} transition-colors duration-500`} id="layout">
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="blog cá nhân" />
-        <title>koalalikecode</title>
+        <meta name="author" content="koalalikecode" />
       </Head>
       <header
         className={`sticky top-0 z-10 backdrop-blur transition-colors duration-500 border-b supports-backdrop-blur:bg-white/60 ${
