@@ -1,4 +1,4 @@
-import { AiOutlineSearch } from "react-icons/ai";
+import { hashToBgColor, hashToTextColor } from "../utils/tag-color";
 
 export default function SideBar({ tags }) {
   return (
@@ -54,12 +54,14 @@ export default function SideBar({ tags }) {
         </div>
       </div>
       <h2 className="text-xl font-mon font-semibold opacity-80 mb-5">Tags</h2>
-      <div className="flex flex-wrap mb-8">
+      <div className="flex flex-wrap mb-8 gap-2">
         {tags.map((tag) => (
           <a
             key={tag}
             href="#"
-            className="rounded-2xl px-3 py-1 mr-2 mb-2 bg-blue-50 text-blue-550 hover:opacity-70 ease-in duration-300"
+            className={`rounded-md px-2 py-1 ${hashToTextColor(
+              tag
+            )} ${hashToBgColor(tag)} ease-in duration-300`}
           >
             {tag}
           </a>

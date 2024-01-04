@@ -26,13 +26,13 @@ export default function Layout({ children, active }) {
   const [menu, setMenu] = useState(false);
   const { theme, setTheme } = useContext(ThemeContext);
   return (
-    <div className={`${theme} transition-colors duration-500`} id="layout">
+    <div className={`${theme} transition-colors duration-300`} id="layout">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="author" content="koalalikecode" />
       </Head>
       <header
-        className={`sticky top-0 z-10 backdrop-blur transition-colors duration-500 border-b supports-backdrop-blur:bg-white/60 ${
+        className={`sticky top-0 z-10 backdrop-blur transition-colors duration-300 border-b supports-backdrop-blur:bg-white/60 ${
           theme === "dark"
             ? "border-slate-50/[0.06] bg-[#0f172a]/90"
             : "bg-white/95 border-slate-900/10"
@@ -46,7 +46,7 @@ export default function Layout({ children, active }) {
 
             <div
               id="menu"
-              className={`md:absolute transition-colors duration-500 md:top-14 md:flex-col md:inset-x-0 md:shadow-md md:shadow-black/10 ${
+              className={`md:absolute md:top-14 md:flex-col md:inset-x-0 md:shadow-md md:shadow-black/10 ${
                 menu ? "md:flex md:animate-fade-down" : "md:hidden"
               }`}
             >

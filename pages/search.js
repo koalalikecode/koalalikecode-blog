@@ -23,7 +23,7 @@ export default function Home({ posts, tags, searchStr }) {
                   title={post.title}
                   description={post.description}
                   time={formatDate(post.createdAt)}
-                  read_duration={`${readTime(post.content)} phút đọc`}
+                  read_duration={`${readTime(post.content)} min read`}
                   link={`/blogs/${post.slug}`}
                   tags={post.tags}
                 />

@@ -11,6 +11,7 @@ import db from "../../config/db/index";
 import readTime from "../../utils/read-time";
 import { formatDate } from "../../utils/lib";
 import { useState, useEffect } from "react";
+import { hashToBgColor, hashToTextColor } from "../../utils/tag-color";
 
 export default function BlogPost({ postData, relatedDatas }) {
   const intro = postData.content;
@@ -111,7 +112,7 @@ export default function BlogPost({ postData, relatedDatas }) {
             </span>
             <span className="flex items-center opacity-70">
               <VscSymbolKeyword className="mr-1" />
-              {readTime(postData.content)} phút đọc
+              {readTime(postData.content)} min read
             </span>
           </div>
           <div className="w-full">
@@ -127,12 +128,14 @@ export default function BlogPost({ postData, relatedDatas }) {
             className={`${postStyles.post_body} post-body`}
             dangerouslySetInnerHTML={{ __html: marked.parse(intro) }}
           ></div>
-          <div className="mt-5 py-8 sm:py-4">
+          <div className="mt-5 py-8 sm:py-4 flex gap-2">
             {postData.tags.map((tag, index) => (
               <a
                 key={index}
                 href="#"
-                className="rounded-md px-3 py-1 mr-2 bg-gray-100 text-gray-500 hover:bg-blue-50 hover:text-blue-550 ease-in duration-300"
+                className={`rounded-md px-2 py-1 ${hashToTextColor(
+                  tag
+                )} ${hashToBgColor(tag)} ease-in duration-300`}
               >
                 {tag}
               </a>
@@ -199,7 +202,7 @@ export default function BlogPost({ postData, relatedDatas }) {
         </div>
       </section>
       <section className="mt-10 sm:mt-5">
-        <h2 className="font-bold text-xl py-5">Bài viết liên quan</h2>
+        <h2 className="font-bold text-xl py-5">Related Posts</h2>
         <div className="related-post overflow-x-auto flex">
           {relatedDatas
             .map((relatedData) => (
@@ -208,7 +211,7 @@ export default function BlogPost({ postData, relatedDatas }) {
                 image={relatedData.thumbnail}
                 title={relatedData.title}
                 time={formatDate(relatedData.createdAt)}
-                read_duration={`${readTime(relatedData.content)} phút đọc`}
+                read_duration={`${readTime(relatedData.content)} min read`}
                 link={`/blogs/${relatedData.slug}`}
               />
             ))

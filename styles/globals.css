@@ -20,10 +20,16 @@
     font-family: "Montserrat", sans-serif;
   }
 
-  #layout,
-  #menu {
+  #layout {
     color: var(--text-color);
     background-color: var(--background-color);
+  }
+
+  @media (max-width: 767px) {
+    #menu {
+      color: var(--text-color);
+      background-color: var(--background-color);
+    }
   }
 
   ::selection {

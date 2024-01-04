@@ -4,6 +4,13 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./icons/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./utils/**/*.{js,ts,jsx,tsx}",
+  ],
+  safelist: [
+    {
+      pattern:
+        /(bg|text)-(red|green|blue|orange|fuchsia|amber|lime|emerald|teal|cyan|sky|indigo|violet|purple|yellow|pink|rose)-(100|600)/,
+    },
   ],
   theme: {
     extend: {
