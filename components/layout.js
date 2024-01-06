@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import LightThemeIcon from "../icons/LightThemeIcon";
 import DarkThemeIcon from "../icons/DarkThemeIcon";
 import { ThemeContext } from "../store/themeContext";
+import Menu from "./menu";
 
 export default function Layout({ children, active }) {
   useEffect(() => {
@@ -38,82 +39,34 @@ export default function Layout({ children, active }) {
             : "bg-white/95 border-slate-900/10"
         }`}
       >
-        <nav className="py-4">
-          <div className="max-w-6xl mx-auto px-4 flex items-center lg:max-w-4xl sm:max-w-lg">
+        <div className="py-4">
+          <div className="max-w-6xl mx-auto px-4 flex justify-between items-center lg:max-w-4xl sm:max-w-lg">
             <Link legacyBehavior href="/">
-              <a className="grow text-xl font-bold">koalalikecode</a>
+              <a className="text-xl font-bold">koalalikecode</a>
             </Link>
+            <div className="flex gap-8 md:gap-0 items-center">
+              <Menu menu={menu} active={active} />
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  const newTheme = theme === "dark" ? "light" : "dark";
+                  setTheme(newTheme);
+                  window.localStorage.setItem("theme", newTheme);
+                }}
+              >
+                {theme === "light" && <LightThemeIcon />}
+                {theme === "dark" && <DarkThemeIcon />}
+              </div>
 
-            <div
-              id="menu"
-              className={`md:absolute md:top-14 md:flex-col md:inset-x-0 md:shadow-md md:shadow-black/10 ${
-                menu ? "md:flex md:animate-fade-down" : "md:hidden"
-              }`}
-            >
-              <Link legacyBehavior href="/">
-                <a
-                  className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
-                    active == "home"
-                      ? "text-blue-550 opacity-100 font-semibold border-b-2 border-blue-550 md:border-l-4 md:border-b-0"
-                      : ""
-                  }`}
-                >
-                  Home
-                </a>
-              </Link>
-              <Link legacyBehavior href="/categories/code">
-                <a
-                  className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
-                    active == "code"
-                      ? "text-blue-550 opacity-100 font-semibold border-b-2 border-blue-550 md:border-l-4 md:border-b-0"
-                      : ""
-                  }`}
-                >
-                  Coding Posts
-                </a>
-              </Link>
-              <Link legacyBehavior href="/categories/life">
-                <a
-                  className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
-                    active == "life"
-                      ? "text-blue-550 opacity-100 font-semibold border-b-2 border-blue-550 md:border-l-4 md:border-b-0"
-                      : ""
-                  }`}
-                >
-                  Life Stories
-                </a>
-              </Link>
-              <Link legacyBehavior href="#">
-                <a
-                  className={`opacity-70 hover:opacity-100 mr-8 md:px-6 md:mr-0 md:py-4 ${
-                    active == "about"
-                      ? "text-blue-550 opacity-100 font-semibold border-b-2 border-blue-550 md:border-l-4 md:border-b-0"
-                      : ""
-                  }`}
-                >
-                  About me
-                </a>
-              </Link>
+              <button
+                onClick={() => setMenu(!menu)}
+                className="hidden cursor-pointer ml-3 text-xl md:block"
+              >
+                <AiOutlineMenu />
+              </button>
             </div>
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                const newTheme = theme === "dark" ? "light" : "dark";
-                setTheme(newTheme);
-                window.localStorage.setItem("theme", newTheme);
-              }}
-            >
-              {theme === "light" && <LightThemeIcon />}
-              {theme === "dark" && <DarkThemeIcon />}
-            </div>
-            <button
-              onClick={() => setMenu(!menu)}
-              className="hidden cursor-pointer ml-3 text-xl md:block"
-            >
-              <AiOutlineMenu />
-            </button>
           </div>
-        </nav>
+        </div>
       </header>
       <main className="max-w-6xl mx-auto px-4 lg:max-w-4xl pb-10 sm:max-w-lg">
         {children}

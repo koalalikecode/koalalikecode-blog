@@ -3,19 +3,20 @@ import Head from "next/head";
 import Image from "next/image";
 import { BiTimeFive } from "react-icons/bi";
 import { VscSymbolKeyword } from "react-icons/vsc";
-import { marked } from "marked";
 import postStyles from "../../styles/post_body.module.css";
+import { marked } from "marked";
 import Post2 from "../../components/post_2";
 import Post from "../../models/Post";
 import db from "../../config/db/index";
 import readTime from "../../utils/read-time";
 import { formatDate } from "../../utils/lib";
 import { useState, useEffect } from "react";
-import { hashToBgColor, hashToTextColor } from "../../utils/tag-color";
 import Tag from "../../components/tag";
+import parse from "html-react-parser";
 
 export default function BlogPost({ postData, relatedDatas }) {
-  const intro = postData.content;
+  const content = postData.content;
+  const contentHtml = parse(marked(content));
   const [toc, setToc] = useState([]);
   const [windowOffSetY, setWindowOffSetY] = useState(0);
 
@@ -127,13 +128,16 @@ export default function BlogPost({ postData, relatedDatas }) {
                 width: "100%",
                 height: "auto",
               }}
+              priority
               alt="thumbnail"
             ></Image>
           </div>
           <div
             className={`${postStyles.post_body} post-body`}
-            dangerouslySetInnerHTML={{ __html: marked.parse(intro) }}
-          ></div>
+            // dangerouslySetInnerHTML={{ __html: marked.parse(intro) }}
+          >
+            {contentHtml}
+          </div>
           <div className="mt-5 py-8 sm:py-4 flex gap-2">
             {postData.tags.map((tag, index) => (
               <Tag tag={tag} link={`/tags/${tag}`} key={tag} />
@@ -199,23 +203,25 @@ export default function BlogPost({ postData, relatedDatas }) {
           </ul>
         </div>
       </section>
-      <section className="mt-10 sm:mt-5">
-        <h2 className="font-bold text-xl py-5">Related Posts</h2>
-        <div className="related-post overflow-x-auto flex">
-          {relatedDatas
-            .map((relatedData) => (
-              <Post2
-                key={relatedData._id}
-                image={relatedData.thumbnail}
-                title={relatedData.title}
-                time={formatDate(relatedData.createdAt)}
-                read_duration={`${readTime(relatedData.content)} min read`}
-                link={`/blogs/${relatedData.slug}`}
-              />
-            ))
-            .reverse()}
-        </div>
-      </section>
+      {relatedDatas.length > 0 && (
+        <section className="mt-10 sm:mt-5">
+          <h2 className="font-bold text-xl py-5">Related Posts</h2>
+          <div className="related-post overflow-x-auto flex">
+            {relatedDatas
+              .map((relatedData) => (
+                <Post2
+                  key={relatedData._id}
+                  image={relatedData.thumbnail}
+                  title={relatedData.title}
+                  time={formatDate(relatedData.createdAt)}
+                  read_duration={`${readTime(relatedData.content)} min read`}
+                  link={`/blogs/${relatedData.slug}`}
+                />
+              ))
+              .reverse()}
+          </div>
+        </section>
+      )}
     </Layout>
   );
 }

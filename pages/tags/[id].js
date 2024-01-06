@@ -29,8 +29,8 @@ export default function TagPage({ posts, tags, tagName }) {
           />
           <title>{tagName} | koalalikecode</title>
         </Head>
-        <h2 className="text-3xl font-mon font-bold mt-5 mb-14 sm:mb-10">
-          🏷️ Posts tagged{" "}
+        <h2 className="text-3xl md:text-2xl font-mon font-bold mt-5 mb-14 sm:mb-10">
+          🏷️Posts tagged{" "}
           <span
             className={`rounded-md px-2 py-[2px] ${hashToTextColor(
               tagName

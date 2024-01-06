@@ -13,8 +13,8 @@ export default function Post({
   link,
 }) {
   return (
-    <div className="flex items-center mb-7 sm:flex-col">
-      <a href={link} className="w-1/3 rounded-xl sm:w-full">
+    <div className="flex items-center mb-7 sm:flex-col gap-2">
+      <a href={link} className="w-[35%] rounded-xl sm:w-full">
         <Image
           src={image}
           sizes="100vw"
@@ -24,12 +24,12 @@ export default function Post({
             height: "auto",
           }}
           width={144}
-          height={110}
+          height={120}
           alt="name"
           className="rounded-xl ease-in duration-200 hover:opacity-70"
         />
       </a>
-      <div className="ml-4 w-2/3 sm:w-full">
+      <div className="w-[65%] sm:w-full">
         <a
           href={link}
           className="font-bold text-xl font-mon sm:mt-3 inline-block"
