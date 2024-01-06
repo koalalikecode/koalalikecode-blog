@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { BiTimeFive, BiCommentDetail } from "react-icons/bi";
+import { BiTimeFive } from "react-icons/bi";
 import { VscSymbolKeyword } from "react-icons/vsc";
-import { hashToBgColor, hashToTextColor } from "../utils/tag-color";
+import Tag from "./tag";
 
 export default function Post({
   image,
@@ -46,15 +46,7 @@ export default function Post({
         </div>
         <div className="flex gap-2">
           {tags.map((tag) => (
-            <a
-              key={tag}
-              href="#"
-              className={`rounded-md px-2 py-1 ${hashToTextColor(
-                tag
-              )} ${hashToBgColor(tag)} ease-in duration-300`}
-            >
-              {tag}
-            </a>
+            <Tag tag={tag} link={`/tags/${tag}`} key={tag} />
           ))}
         </div>
       </div>

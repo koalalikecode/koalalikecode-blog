@@ -1,22 +1,9 @@
 import { hashToBgColor, hashToTextColor } from "../utils/tag-color";
+import Tag from "./tag";
 
 export default function SideBar({ tags }) {
   return (
     <div className="sticky top-20 lg:static">
-      {/* <form className="flex items-center mb-6 h-10" action="/search">
-        <input
-          type="text"
-          className="p-2 bg-blue-50 caret-purple-600 outline-none border border-transparent focus:border-blue-600 h-full"
-          placeholder="Search..."
-          name="search"
-        />
-        <button
-          className="px-4 bg-blue-550 h-full hover:opacity-80"
-          type="submit"
-        >
-          <AiOutlineSearch className="fill-white text-lg" />
-        </button>
-      </form> */}
       <div className="flex flex-wrap -mx-2 mb-6">
         <div className="px-2 grow-[9999] basis-64 mt-3">
           <div className="group relative">
@@ -56,15 +43,7 @@ export default function SideBar({ tags }) {
       <h2 className="text-xl font-mon font-semibold opacity-80 mb-5">Tags</h2>
       <div className="flex flex-wrap mb-8 gap-2">
         {tags.map((tag) => (
-          <a
-            key={tag}
-            href="#"
-            className={`rounded-md px-2 py-1 ${hashToTextColor(
-              tag
-            )} ${hashToBgColor(tag)} ease-in duration-300`}
-          >
-            {tag}
-          </a>
+          <Tag tag={tag} link={`/tags/${tag}`} key={tag} />
         ))}
       </div>
     </div>

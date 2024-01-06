@@ -12,6 +12,7 @@ import readTime from "../../utils/read-time";
 import { formatDate } from "../../utils/lib";
 import { useState, useEffect } from "react";
 import { hashToBgColor, hashToTextColor } from "../../utils/tag-color";
+import Tag from "../../components/tag";
 
 export default function BlogPost({ postData, relatedDatas }) {
   const intro = postData.content;
@@ -130,15 +131,7 @@ export default function BlogPost({ postData, relatedDatas }) {
           ></div>
           <div className="mt-5 py-8 sm:py-4 flex gap-2">
             {postData.tags.map((tag, index) => (
-              <a
-                key={index}
-                href="#"
-                className={`rounded-md px-2 py-1 ${hashToTextColor(
-                  tag
-                )} ${hashToBgColor(tag)} ease-in duration-300`}
-              >
-                {tag}
-              </a>
+              <Tag tag={tag} link={`/tags/${tag}`} key={tag} />
             ))}
           </div>
         </div>
