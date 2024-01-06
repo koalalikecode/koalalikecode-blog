@@ -3,7 +3,7 @@ import { hashToBgColor, hashToTextColor } from "../utils/tag-color";
 
 function Tag({ tag, link }) {
   return (
-    <Link href={link}>
+    <Link legacyBehavior href={link}>
       <a
         className={`rounded-md px-2 py-1 ${hashToTextColor(
           tag

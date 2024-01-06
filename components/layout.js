@@ -40,7 +40,7 @@ export default function Layout({ children, active }) {
       >
         <nav className="py-4">
           <div className="max-w-6xl mx-auto px-4 flex items-center lg:max-w-4xl sm:max-w-lg">
-            <Link href="/">
+            <Link legacyBehavior href="/">
               <a className="grow text-xl font-bold">koalalikecode</a>
             </Link>
 
@@ -50,7 +50,7 @@ export default function Layout({ children, active }) {
                 menu ? "md:flex md:animate-fade-down" : "md:hidden"
               }`}
             >
-              <Link href="/">
+              <Link legacyBehavior href="/">
                 <a
                   className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
                     active == "home"
@@ -61,7 +61,7 @@ export default function Layout({ children, active }) {
                   Home
                 </a>
               </Link>
-              <Link href="/categories/code">
+              <Link legacyBehavior href="/categories/code">
                 <a
                   className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
                     active == "code"
@@ -72,7 +72,7 @@ export default function Layout({ children, active }) {
                   Coding Posts
                 </a>
               </Link>
-              <Link href="/categories/life">
+              <Link legacyBehavior href="/categories/life">
                 <a
                   className={`opacity-70 hover:opacity-100 mr-6 py-4 md:px-6 md:mr-0 ${
                     active == "life"
@@ -83,7 +83,7 @@ export default function Layout({ children, active }) {
                   Life Stories
                 </a>
               </Link>
-              <Link href="#">
+              <Link legacyBehavior href="#">
                 <a
                   className={`opacity-70 hover:opacity-100 mr-8 md:px-6 md:mr-0 md:py-4 ${
                     active == "about"
@@ -124,17 +124,23 @@ export default function Layout({ children, active }) {
           <div>
             <h3 className="text-lg font-bold mb-3">Contacts</h3>
             <div className="flex">
-              <Link href="https://github.com/koalalikecode">
+              <Link legacyBehavior href="https://github.com/koalalikecode">
                 <a target="_blank" className="text-4xl hover:opacity-80 mr-2">
                   <AiFillGithub className="duration-200 fill-slate-500 hover:fill-black" />
                 </a>
               </Link>
-              <Link href="https://www.linkedin.com/in/duy-nguyen-97845a217/">
+              <Link
+                legacyBehavior
+                href="https://www.linkedin.com/in/duy-nguyen-97845a217/"
+              >
                 <a target="_blank" className="text-4xl hover:opacity-80 mr-2">
                   <AiFillLinkedin className="duration-200 fill-slate-500 hover:fill-sky-600" />
                 </a>
               </Link>
-              <Link href="https://www.facebook.com/profile.php?id=100041242865819">
+              <Link
+                legacyBehavior
+                href="https://www.facebook.com/profile.php?id=100041242865819"
+              >
                 <a target="_blank" className="text-4xl hover:opacity-80">
                   <AiFillFacebook className="duration-200 fill-slate-500 hover:fill-blue-550" />
                 </a>
