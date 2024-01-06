@@ -121,7 +121,12 @@ export default function BlogPost({ postData, relatedDatas }) {
               src={postData.thumbnail}
               width={144}
               height={80}
-              layout="responsive"
+              sizes="100vw"
+              // Make the image display full width
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
               alt="thumbnail"
             ></Image>
           </div>

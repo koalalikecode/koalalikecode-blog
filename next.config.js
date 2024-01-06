@@ -3,8 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['i.postimg.cc'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.postimg.cc",
+      },
+    ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

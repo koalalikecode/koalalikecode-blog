@@ -17,7 +17,12 @@ export default function Post({
       <a href={link} className="w-1/3 rounded-xl sm:w-full">
         <Image
           src={image}
-          layout="responsive"
+          sizes="100vw"
+          // Make the image display full width
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
           width={144}
           height={110}
           alt="name"

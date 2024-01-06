@@ -8,7 +8,12 @@ export default function Post2({ image, title, time, read_duration, link }) {
       <a href={link} className="">
         <Image
           src={image}
-          layout="responsive"
+          sizes="100vw"
+          // Make the image display full width
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
           width={144}
           height={90}
           alt="name"
