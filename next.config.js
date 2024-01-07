@@ -10,6 +10,9 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    FORM_URL: process.env.FORM_URL,
+  },
 };
 
 module.exports = nextConfig;
