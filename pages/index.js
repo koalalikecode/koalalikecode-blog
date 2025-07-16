@@ -6,8 +6,9 @@ import BlogPost from "../models/Post";
 import readTime from "../utils/read-time";
 import { formatDate } from "../utils/lib";
 import Head from "next/head";
+import Pagination from "../components/Pagination";
 
-export default function Home({ posts, tags }) {
+export default function Home({ posts, tags, currentPage, totalPages }) {
   return (
     <div>
       <Layout active="home">
@@ -45,8 +46,8 @@ export default function Home({ posts, tags }) {
                   link={`/blogs/${post.slug}`}
                   tags={post.tags}
                 />
-              ))
-              .reverse()}
+              ))}
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
 
           <div className="">
@@ -58,9 +59,14 @@ export default function Home({ posts, tags }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   await db.connect();
-  let posts = await BlogPost.find();
+  const page = parseInt(context.query.page) || 1;
+  const limit = 5;
+  const skip = (page - 1) * limit;
+  const totalPosts = await BlogPost.countDocuments();
+  const totalPages = Math.ceil(totalPosts / limit);
+  let posts = await BlogPost.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
   let tags = [];
   posts = JSON.parse(JSON.stringify(posts));
   posts.forEach((post) => {
@@ -72,7 +78,8 @@ export async function getStaticProps() {
     props: {
       posts,
       tags,
+      currentPage: page,
+      totalPages,
     },
-    revalidate: 10,
   };
 }

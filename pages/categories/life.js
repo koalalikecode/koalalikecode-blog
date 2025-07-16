@@ -6,8 +6,9 @@ import BlogPost from "../../models/Post";
 import readTime from "../../utils/read-time";
 import { formatDate } from "../../utils/lib";
 import Head from "next/head";
+import Pagination from "../../components/Pagination";
 
-export default function Life({ posts, tags }) {
+export default function Life({ posts, tags, currentPage, totalPages }) {
   return (
     <div>
       <Layout active="life">
@@ -36,20 +37,19 @@ export default function Life({ posts, tags }) {
         </h2>
         <div className="grid grid-cols-3 gap-x-8 lg:grid-cols-1 lg:gap-x-0">
           <div className="col-span-2 lg:col-span-1 lg:order-2">
-            {posts
-              .map((post) => (
-                <Post
-                  key={post._id}
-                  image={post.thumbnail}
-                  title={post.title}
-                  description={post.description}
-                  time={formatDate(post.createdAt)}
-                  read_duration={`${readTime(post.content)} min read`}
-                  link={`/blogs/${post.slug}`}
-                  tags={post.tags}
-                />
-              ))
-              .reverse()}
+            {posts.map((post) => (
+              <Post
+                key={post._id}
+                image={post.thumbnail}
+                title={post.title}
+                description={post.description}
+                time={formatDate(post.createdAt)}
+                read_duration={`${readTime(post.content)} min read`}
+                link={`/blogs/${post.slug}`}
+                tags={post.tags}
+              />
+            ))}
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
 
           <div className="">
@@ -61,9 +61,17 @@ export default function Life({ posts, tags }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   await db.connect();
-  let posts = await BlogPost.find({ categories: "life" });
+  const page = parseInt(context.query.page) || 1;
+  const limit = 5;
+  const skip = (page - 1) * limit;
+  const totalPosts = await BlogPost.countDocuments({ categories: "life" });
+  const totalPages = Math.ceil(totalPosts / limit);
+  let posts = await BlogPost.find({ categories: "life" })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
   let tags = [];
   posts = JSON.parse(JSON.stringify(posts));
   posts.forEach((post) => {
@@ -75,7 +83,8 @@ export async function getStaticProps() {
     props: {
       posts,
       tags,
+      currentPage: page,
+      totalPages,
     },
-    revalidate: 10,
   };
 }

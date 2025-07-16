@@ -217,8 +217,7 @@ export default function BlogPost({ postData, relatedDatas }) {
                   read_duration={`${readTime(relatedData.content)} min read`}
                   link={`/blogs/${relatedData.slug}`}
                 />
-              ))
-              .reverse()}
+              ))}
           </div>
         </section>
       )}
@@ -233,7 +232,7 @@ export async function getStaticProps({ params }) {
   let relatedDatas = await Post.find({
     tags: { $in: postData.tags },
     slug: { $ne: postData.slug },
-  });
+  }).sort({ createdAt: -1 });
   relatedDatas = JSON.parse(JSON.stringify(relatedDatas));
   return {
     props: {

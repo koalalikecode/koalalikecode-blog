@@ -13,7 +13,10 @@ export default function SideBar({ tags }) {
       setIsLoading(true);
       fetch(process.env.FORM_URL, {
         method: "POST",
-        body: new FormData(e.target),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `email_address=${emailInput}`,
       })
         .then((response) => {
           toast.success("🚀 Thank You for Subscribing", {
