@@ -127,6 +127,7 @@ export default function BlogPost({ postData, relatedDatas }) {
                 height: "auto",
               }}
               quality={100}
+              unoptimized={true}
               priority
               alt={postData.title}
             ></Image>

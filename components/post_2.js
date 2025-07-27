@@ -15,6 +15,7 @@ export default function Post2({ image, title, time, read_duration, link }) {
           width={800}
           height={600}
           quality={100}
+          unoptimized={true}
           alt="name"
           className=" ease-in duration-300"
         />

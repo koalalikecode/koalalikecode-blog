@@ -24,6 +24,7 @@ export default function Post({
           width={800}
           height={600}
           quality={100}
+          unoptimized={true}
           alt="name"
           className="rounded-xl ease-in duration-200 hover:opacity-70"
         />
