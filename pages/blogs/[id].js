@@ -120,10 +120,9 @@ export default function BlogPost({ postData, relatedDatas }) {
           <div className="w-full">
             <Image
               src={postData.thumbnail}
-              width={144}
-              height={80}
+              width={800}
+              height={600}
               sizes="100vw"
-              // Make the image display full width
               style={{
                 width: "100%",
                 height: "auto",

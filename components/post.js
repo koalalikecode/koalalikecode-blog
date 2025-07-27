@@ -23,8 +23,8 @@ export default function Post({
             width: "100%",
             height: "auto",
           }}
-          width={144}
-          height={120}
+          width={800}
+          height={600}
           quality={100}
           alt="name"
           className="rounded-xl ease-in duration-200 hover:opacity-70"

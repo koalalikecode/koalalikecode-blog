@@ -9,13 +9,12 @@ export default function Post2({ image, title, time, read_duration, link }) {
         <Image
           src={image}
           sizes="100vw"
-          // Make the image display full width
           style={{
             width: "100%",
             height: "auto",
           }}
-          width={144}
-          height={90}
+          width={800}
+          height={600}
           quality={100}
           alt="name"
           className=" ease-in duration-300"
