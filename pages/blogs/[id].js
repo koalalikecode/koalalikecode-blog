@@ -128,8 +128,9 @@ export default function BlogPost({ postData, relatedDatas }) {
                 width: "100%",
                 height: "auto",
               }}
+              quality={100}
               priority
-              alt="thumbnail"
+              alt={postData.title}
             ></Image>
           </div>
           <div

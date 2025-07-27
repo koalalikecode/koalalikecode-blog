@@ -25,6 +25,7 @@ export default function Post({
           }}
           width={144}
           height={120}
+          quality={100}
           alt="name"
           className="rounded-xl ease-in duration-200 hover:opacity-70"
         />
