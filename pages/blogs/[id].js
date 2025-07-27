@@ -122,7 +122,6 @@ export default function BlogPost({ postData, relatedDatas }) {
               src={postData.thumbnail}
               width={800}
               height={600}
-              sizes="100vw"
               style={{
                 width: "100%",
                 height: "auto",

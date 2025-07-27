@@ -8,7 +8,6 @@ export default function Post2({ image, title, time, read_duration, link }) {
       <a href={link} className="">
         <Image
           src={image}
-          sizes="100vw"
           style={{
             width: "100%",
             height: "auto",
