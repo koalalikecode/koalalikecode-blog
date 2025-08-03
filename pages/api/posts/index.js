@@ -1,9 +1,8 @@
-import Post from "../../../models/Post";
-import db from "../../../config/db/index";
+import Post from '../../../models/Post';
+import db from '../../../config/db/index';
 import jwt from 'jsonwebtoken';
-var slugify = require("slugify");
 
-export default async function getPosts(req, res) {
+export default async function handler(req, res) {
   await db.connect();
   // Check JWT
   const auth = req.headers.authorization;
@@ -14,9 +13,9 @@ export default async function getPosts(req, res) {
   } catch {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  const formData = req.body;
-  let slug = slugify(formData.title);
-  const post = await Post.create({ ...formData, slug: slug });
-
-  res.json({ post });
-}
+  if (req.method === 'GET') {
+    const posts = await Post.find({}).sort({ createdAt: -1 });
+    return res.json({ posts });
+  }
+  res.status(405).json({ error: 'Method not allowed' });
+} 
