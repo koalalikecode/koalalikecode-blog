@@ -13,6 +13,7 @@ import { formatDate } from "../../utils/lib";
 import { useState, useEffect } from "react";
 import Tag from "../../components/tag";
 import parse from "html-react-parser";
+import CommentSection from '../../components/CommentSection';
 
 export default function BlogPost({ postData, relatedDatas }) {
   const content = postData.content;
@@ -149,7 +150,7 @@ export default function BlogPost({ postData, relatedDatas }) {
             {toc.map((h2Heading, index) => (
               <li className="" key={h2Heading.id}>
                 <a
-                  className={`block leading-7 after:rounded relative after:absolute after:w-0 after:top-6 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-blue-550 ${
+                  className={`block leading-7 after:rounded relative after:absolute after:w-0 after:top-6 after:h-0.5 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-blue-550 ${
                     checkFirstPositionHeading(h2Heading, index, toc)
                       ? "text-blue-550"
                       : ""
@@ -168,7 +169,7 @@ export default function BlogPost({ postData, relatedDatas }) {
                   <ul className="ml-5">
                     {h2Heading.items.map((child, childIndex) => (
                       <li
-                        className={`after:rounded relative after:absolute after:w-0 after:bottom-0 after:h-1 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-purple-500 ${
+                        className={`after:rounded relative after:absolute after:w-0 after:bottom-0 after:h-0.5 hover:after:bg-gradient-to-r from-blue-500 to-purple-500 after:left-0 after:transition-width hover:after:w-full after:duration-300 hover:text-purple-500 ${
                           checkChildPositionHeading(
                             child,
                             childIndex,
@@ -221,6 +222,8 @@ export default function BlogPost({ postData, relatedDatas }) {
           </div>
         </section>
       )}
+      {/* Section bình luận */}
+      <CommentSection postId={postData._id} />
     </Layout>
   );
 }
