@@ -1,68 +1,71 @@
 .post_body p {
-  font-size: 18px;
-  margin: 20px 0;
-  line-height: 32px;
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  margin: 1rem 0;
+  line-height: 1.9;
 }
 
 .post_body h2 {
-  font-size: 28px;
-  margin: 20px 0;
+  font-size: clamp(1.6rem, 2vw, 1.9rem);
+  margin: 1.8rem 0 1rem;
   font-weight: bold;
   scroll-margin-top: 5rem;
+  line-height: 1.35;
 }
 
 .post_body h3 {
-  font-size: 22px;
-  margin: 20px 0;
+  font-size: clamp(1.35rem, 1.7vw, 1.55rem);
+  margin: 1.5rem 0 0.9rem;
   font-weight: bold;
   scroll-margin-top: 5rem;
+  line-height: 1.4;
 }
 
 .post_body h4 {
-  font-size: 20px;
-  margin: 20px 0;
+  font-size: clamp(1.15rem, 1.4vw, 1.3rem);
+  margin: 1.2rem 0 0.8rem;
   font-weight: bold;
 }
 
 .post_body h5 {
-  font-size: 18px;
-  margin: 20px 0;
+  font-size: 1.05rem;
+  margin: 1.1rem 0 0.7rem;
   font-weight: bold;
 }
 
 .post_body h6 {
-  font-size: 14px;
-  margin: 20px 0;
+  font-size: 0.95rem;
+  margin: 1rem 0 0.65rem;
   font-weight: bold;
 }
 
 .post_body ol {
   list-style: numeric;
-  font-size: 18px;
-  margin: 20px 0;
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  margin: 1rem 0;
   padding-left: 32px;
 }
 .post_body ol li {
-  margin: 12px 0;
-  line-height: 32px;
+  margin: 0.7rem 0;
+  line-height: 1.9;
 }
 
 .post_body ul {
   list-style: initial;
-  font-size: 18px;
-  margin: 20px 0;
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  margin: 1rem 0;
   padding-left: 32px;
 }
 .post_body ul li {
-  margin: 12px 0;
-  line-height: 32px;
+  margin: 0.7rem 0;
+  line-height: 1.9;
 }
 
 .post_body blockquote {
-  padding: 24px;
-  margin: 20px 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
   border-left: 4px solid #0070f3;
   background-color: var(--blockquote-color);
+  border-radius: 0.5rem;
 }
 
 .post_body blockquote p {
@@ -83,9 +86,10 @@
 
 .post_body pre {
   background-color: #282a36;
-  padding: 24px;
+  padding: 1.25rem;
   border-radius: 5px;
-  margin: 20px 0;
+  margin: 1.25rem 0;
+  overflow-x: auto;
 }
 .post_body pre code {
   background-color: transparent;

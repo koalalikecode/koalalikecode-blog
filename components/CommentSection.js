@@ -1,7 +1,9 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef, useContext, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import "react-quill/dist/quill.snow.css";
 import { ThemeContext } from '../store/themeContext';
+import Button from "./ui/Button";
+import Input from "./ui/Input";
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -16,11 +18,7 @@ export default function CommentSection({ postId }) {
   const editorRef = useRef(null);
   const [replyToName, setReplyToName] = useState("");
 
-  useEffect(() => {
-    fetchComments();
-  }, [postId]);
-
-  async function fetchComments() {
+  const fetchComments = useCallback(async () => {
     try {
       const res = await fetch(`/api/comments/${postId}`);
       const data = await res.json();
@@ -28,7 +26,11 @@ export default function CommentSection({ postId }) {
     } catch (err) {
       setError("Unable to load comments");
     }
-  }
+  }, [postId]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -110,8 +112,8 @@ export default function CommentSection({ postId }) {
             <button type="button" onClick={handleCancelReply} className={`ml-2 text-xs underline ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>Cancel</button>
           </div>
         )}
-        <input
-          className={`block w-full mb-2 p-2 border rounded ${theme === 'dark' ? 'bg-gray-900 text-gray-100 border-gray-700 placeholder-gray-400' : ''}`}
+        <Input
+          className={`mb-2 ${theme === 'dark' ? 'border-gray-700 placeholder-gray-400' : ''}`}
           placeholder="Your name"
           value={name}
           onChange={e => setName(e.target.value)}
@@ -128,16 +130,16 @@ export default function CommentSection({ postId }) {
           />
         </div>
         {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
-        <button
+        <Button
           type="submit"
-          className={`px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-60 ${theme === 'dark' ? 'bg-blue-700 text-white' : 'bg-blue-600 text-white'}`}
+          className="hover:brightness-110"
           disabled={loading}
         >
           {loading ? 'Submitting...' : (replyTo ? 'Reply' : 'Comment')}
-        </button>
+        </Button>
       </form>
       <div>
-        {comments.length === 0 && <div className="text-gray-500">No comments yet.</div>}
+        {comments.length === 0 && <div className="text-slate-500">No comments yet.</div>}
         <ul>
           {comments.map(parent => (
             <li key={parent._id} className={`mb-6 ${theme === 'dark' ? 'border-gray-700' : ''}`}>

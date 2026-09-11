@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./icons/**/*.{js,ts,jsx,tsx}",
@@ -17,6 +18,11 @@ module.exports = {
       colors: {
         "blue-550": "#0070f3",
         "dark-bg": "rgb(15 23 42/1)",
+        primary: "var(--color-primary)",
+        accent: "var(--color-accent)",
+        surface: "var(--color-surface)",
+        muted: "var(--color-muted)",
+        border: "var(--color-border)",
       },
       transitionProperty: {
         width: "width",

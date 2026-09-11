@@ -1,11 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BiTimeFive } from "react-icons/bi";
 import { VscSymbolKeyword } from "react-icons/vsc";
 
 export default function Post2({ image, title, time, read_duration, link }) {
   return (
     <div className="w-64 mr-4 flex-shrink-0">
-      <a href={link} className="">
+      <Link href={link} className="">
         <Image
           src={image}
           style={{
@@ -16,14 +17,14 @@ export default function Post2({ image, title, time, read_duration, link }) {
           height={600}
           quality={100}
           unoptimized={true}
-          alt="name"
+          alt={title}
           className=" ease-in duration-300"
         />
-      </a>
+      </Link>
       <div className="mt-4">
-        <a href={link} className="font-bold text-lg font-mon inline-block mb-2">
+        <Link href={link} className="font-bold text-lg font-mon inline-block mb-2">
           {title}
-        </a>
+        </Link>
         <div className="flex mb-2">
           <span className="flex items-center mr-3 opacity-70">
             <BiTimeFive className="mr-1" />

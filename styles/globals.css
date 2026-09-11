@@ -4,25 +4,54 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     --text-color: black;
     --background-color: white;
     --blockquote-color: #eff6ff;
+    --color-text: #0f172a;
+    --color-bg: #ffffff;
+    --color-surface: #f8fafc;
+    --color-primary: #0070f3;
+    --color-accent: #8b5cf6;
+    --color-muted: #64748b;
+    --color-border: #e2e8f0;
   }
 
   .dark {
     --text-color: white;
     --background-color: #0f172a;
     --blockquote-color: #0f172a;
+    --color-text: #e2e8f0;
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-primary: #60a5fa;
+    --color-accent: #a78bfa;
+    --color-muted: #94a3b8;
+    --color-border: #334155;
   }
   html,
   body {
     font-family: "Montserrat", sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   #layout {
     color: var(--text-color);
     background-color: var(--background-color);
+    min-height: 100vh;
   }
 
   @media (max-width: 767px) {
@@ -99,6 +128,24 @@
     .related-post::-webkit-scrollbar-track {
       background: transparent;
     }
+  }
+}
+
+@layer components {
+  .ui-card {
+    @apply rounded-xl border border-border bg-surface;
+  }
+
+  .ui-btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .ui-btn-outline {
+    @apply inline-flex items-center justify-center rounded-md border border-primary px-4 py-2 text-sm font-semibold text-primary transition duration-200 hover:bg-blue-50 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .ui-input {
+    @apply block w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-slate-900 dark:text-slate-100;
   }
 }
 

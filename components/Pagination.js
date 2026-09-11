@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Button from "./ui/Button";
 
 export default function Pagination({ currentPage, totalPages }) {
   const router = useRouter();
@@ -19,35 +20,42 @@ export default function Pagination({ currentPage, totalPages }) {
   }
 
   return (
-    <div className="flex gap-2 justify-center my-8">
-      <button
+    <nav
+      className="flex gap-2 justify-center my-8 flex-wrap"
+      aria-label="Pagination Navigation"
+    >
+      <Button
+        variant="outline"
         onClick={() => goToPage(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-1 border border-blue-500 rounded text-blue-500 hover:bg-blue-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-1.5 rounded-full text-sm"
       >
-        Prev
-      </button>
+        ← Prev
+      </Button>
       {pages.map((page) => (
-        <button
+        <Button
           key={page}
           onClick={() => goToPage(page)}
-          className={`px-3 py-1 border border-blue-500 rounded transition
-            ${page === currentPage
-              ? "bg-blue-500 text-white font-semibold cursor-default"
-              : "text-blue-500 hover:bg-blue-100 hover:text-blue-700"}
-          `}
+          className={`px-4 py-1.5 rounded-full text-sm ${
+            page === currentPage
+              ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white font-semibold border-transparent cursor-default"
+              : ""
+          }`}
           disabled={page === currentPage}
+          variant={page === currentPage ? "primary" : "outline"}
+          aria-current={page === currentPage ? "page" : undefined}
         >
           {page}
-        </button>
+        </Button>
       ))}
-      <button
+      <Button
+        variant="outline"
         onClick={() => goToPage(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1 border border-blue-500 rounded text-blue-500 hover:bg-blue-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-1.5 rounded-full text-sm"
       >
-        Next
-      </button>
-    </div>
+        Next →
+      </Button>
+    </nav>
   );
-} 
+}
