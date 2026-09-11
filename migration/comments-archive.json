@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "688f3901a24c435f5ad16e0f",
+    "postId": "6302f18a6d7c2c965ee16e47",
+    "parentId": null,
+    "name": "Duy Nguyễn",
+    "content": "<p>Bài viết tạm ổn!</p><p>Có vài góp ý như sau:</p><ol><li>Test 1</li><li>Test 2</li></ol>",
+    "createdAt": "2025-08-03T10:25:05.620Z",
+    "updatedAt": "2025-08-03T10:25:05.620Z",
+    "__v": 0
+  },
+  {
+    "_id": "688f3981a24c435f5ad16e14",
+    "postId": "6302f18a6d7c2c965ee16e47",
+    "parentId": "688f3901a24c435f5ad16e0f",
+    "name": "Duy Nguyễn 2",
+    "content": "<p>Tôi đồng ý</p>",
+    "createdAt": "2025-08-03T10:27:13.105Z",
+    "updatedAt": "2025-08-03T10:27:13.105Z",
+    "__v": 0
+  },
+  {
+    "_id": "688f3a0ba24c435f5ad16e1f",
+    "postId": "6302f18a6d7c2c965ee16e47",
+    "parentId": "688f3901a24c435f5ad16e0f",
+    "name": "Duy Nguyễn 3",
+    "content": "<p>Tôi cũng nghĩ vậy</p>",
+    "createdAt": "2025-08-03T10:29:31.664Z",
+    "updatedAt": "2025-08-03T10:29:31.664Z",
+    "__v": 0
+  },
+  {
+    "_id": "688f3d48a24c435f5ad16e29",
+    "postId": "6302f18a6d7c2c965ee16e47",
+    "parentId": null,
+    "name": "Anonymous",
+    "content": "<blockquote>test another comment</blockquote><pre class=\"ql-syntax\" spellcheck=\"false\">&lt;div&gt;\n &lt;p&gt;test&lt;/p&gt;\n&lt;/div&gt;\n</pre><h3>oke nhé</h3><p><br></p><p><code>again</code><span class=\"ql-cursor\">﻿</span></p>",
+    "createdAt": "2025-08-03T10:43:20.088Z",
+    "updatedAt": "2025-08-03T10:43:20.088Z",
+    "__v": 0
+  },
+  {
+    "_id": "689028dd07432a01ce3a6ac5",
+    "postId": "688f94d0bd4c912af8804a99",
+    "parentId": null,
+    "name": "Anonymous",
+    "content": "<p>Bài viết quá hay và xúc tích ạ nhưng dark mode phần comment đang bị bug UI/UX trắng chữ nhé sếp có j sếp hotfix giùm =)))</p>",
+    "createdAt": "2025-08-04T03:28:29.807Z",
+    "updatedAt": "2025-08-04T03:28:29.807Z",
+    "__v": 0
+  },
+  {
+    "_id": "6890ed33b97c65a3e073690f",
+    "postId": "688f94d0bd4c912af8804a99",
+    "parentId": null,
+    "name": "Ẩn danh 1",
+    "content": "<p>Hay quá 🎉&nbsp;</p>",
+    "createdAt": "2025-08-04T17:26:11.157Z",
+    "updatedAt": "2025-08-04T17:26:11.157Z",
+    "__v": 0
+  }
+]
