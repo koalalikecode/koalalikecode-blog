@@ -1,0 +1,12 @@
+# Chuẩn hoá line ending: repo luôn lưu LF, tránh diff nhiễu khi làm việc giữa Windows và WSL
+* text=auto eol=lf
+
+# File nhị phân - không đụng vào
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
