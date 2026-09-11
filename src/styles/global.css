@@ -81,7 +81,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Leave room for the sticky header when jumping to an anchor */
+    /* Leave room for the sticky header when jumping to an anchor.
+       Set only here. Adding scroll-margin-top on the headings as well would
+       stack with this and push the target twice as far down the viewport. */
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
   }
@@ -213,14 +215,12 @@
     margin-top: 2.5em;
     margin-bottom: 0.6em;
     font-size: 1.65rem;
-    scroll-margin-top: 5rem;
   }
 
   .prose h3 {
     margin-top: 2em;
     margin-bottom: 0.5em;
     font-size: 1.3rem;
-    scroll-margin-top: 5rem;
   }
 
   .prose h4 {
