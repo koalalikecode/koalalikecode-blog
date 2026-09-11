@@ -4,7 +4,7 @@ description: "CSS là một ngôn ngữ không thể thiếu trong lập trình 
 slug: "SASS-Khi-CSS-duoc-viet-nhu-mot-ngon-ngu-lap-trinh"
 pubDate: 2022-10-04T07:51:40.494Z
 updatedDate: 2022-10-04T07:51:40.494Z
-heroImage: "./SASS-Khi-CSS-duoc-viet-nhu-mot-ngon-ngu-lap-trinh-hero.png"
+heroImage: "../../assets/blog/SASS-Khi-CSS-duoc-viet-nhu-mot-ngon-ngu-lap-trinh-hero.png"
 tags: ["css", "frontend"]
 categories: ["code"]
 legacyId: "633be60c5134e07159d8deb9"

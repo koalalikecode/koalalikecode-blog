@@ -1,0 +1,56 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  pubDate: Date;
+  readingTime: number;
+  tags?: string[];
+}
+
+const { title, description, href, pubDate, readingTime, tags = [] } = Astro.props;
+---
+
+<article class="group border-b py-6 first:pt-0" style="border-color: var(--border);">
+  <a href={href} class="block">
+    <div
+      class="mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs"
+      style="color: var(--text-faint);"
+    >
+      <FormattedDate date={pubDate} />
+      <span aria-hidden="true">·</span>
+      <span>{readingTime} phút đọc</span>
+    </div>
+
+    <h2
+      class="mb-1.5 text-lg font-semibold transition-colors"
+      style="color: var(--text);"
+    >
+      <span class="bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]"
+        style="background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0% 1px; padding-bottom: 1px;"
+      >{title}</span>
+    </h2>
+
+    <p class="line-clamp-2 text-sm leading-relaxed" style="color: var(--text-muted);">
+      {description}
+    </p>
+  </a>
+
+  {
+    tags.length > 0 && (
+      <div class="mt-3 flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <a
+            href={`/tags/${encodeURIComponent(tag)}`}
+            class="rounded-full border px-2.5 py-0.5 text-xs transition-colors"
+            style="border-color: var(--border); color: var(--text-muted);"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</article>

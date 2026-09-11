@@ -4,7 +4,7 @@ description: "Hello các bạn, nếu các bạn có tìm hiểu hoặc đọc q
 slug: "Pre-rendering-va-Data-Fetching-trong-Next.js"
 pubDate: 2022-09-16T09:34:14.792Z
 updatedDate: 2025-07-27T17:22:31.283Z
-heroImage: "./Pre-rendering-va-Data-Fetching-trong-Next.js-hero.png"
+heroImage: "../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-hero.png"
 tags: ["nextjs", "frontend"]
 categories: ["code"]
 legacyId: "63244316aa838c2489255bbd"
@@ -18,9 +18,9 @@ Hello các bạn, nếu các bạn có tìm hiểu hoặc đọc qua về Next.j
 
 Mặc định, Next.js sẽ pre-renders các trang, có nghĩa là *HTML sẽ được tạo trước cho từng trang, thay vì tất cả được thực hiện ở client-side bởi JavaScript*. Pre-rendering nâng cao hiệu năng của trang web và SEO (search engine optimization)
 
-![img](./Pre-rendering-va-Data-Fetching-trong-Next.js-1.png)
+![img](../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-1.png)
 
-![img](./Pre-rendering-va-Data-Fetching-trong-Next.js-2.png)
+![img](../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-2.png)
 
 ### Phân loại Pre-rendering
 
@@ -43,13 +43,13 @@ Tóm lại, nếu bạn cho rằng mình có thể pre-render trang web này tr�
 
 Với những trang web không yêu cầu tìm nạp dữ liệu từ bên ngoài, Next.js sẽ tự động thực hiện Static Generation đối với trang đấy và HTML sẽ được tạo tại thời điểm build time.
 
-![img](./Pre-rendering-va-Data-Fetching-trong-Next.js-3.png)
+![img](../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-3.png)
 
 ### Static Generation có data
 
 Tuy nhiên, đối với nhiều trang web, chúng ta mong đợi việc có thể fetch dữ liệu từ bên ngoài để render ra HTML, có thể là sử dụng API, dữ liêụ từ file systems, hoặc truy xuất cơ sở dữ liệu tại thời điểm build time,... Và Next.js cho bạn phương thức để thực hiện điều này.
 
-![img](./Pre-rendering-va-Data-Fetching-trong-Next.js-4.png)
+![img](../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-4.png)
 
 **Static Generation có Data với `` `getStaticProps` ``**
 
@@ -118,7 +118,7 @@ export async function getStaticProps() {
 
 Nếu bạn muốn fetch dữ liệu tại **request time** thay vì **build time**, bạn có thể dùng [Server-side Rendering](https://nextjs.org/docs/basic-features/pages#server-side-rendering):
 
-![img](./Pre-rendering-va-Data-Fetching-trong-Next.js-5.png)
+![img](../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-5.png)
 
 Để sử dụng Server-side Rendering, bạn cần export `getServerSideProps` thay vì `getStaticProps`.
 
@@ -147,7 +147,7 @@ Nếu bạn không cần phải render trước dữ liệu, bạn có thể s�
 - Pre-render bằng phương pháp Static Generation những phần của trang mà không yêu cầu dữ liệu từ bên ngoài.
 - Trong quá trình tải trang, fetch dữ liệu từ bên ngoài từ client bằng JavaScript và hoàn tất các phần còn lại của trang.
 
-![img](./Pre-rendering-va-Data-Fetching-trong-Next.js-6.png)
+![img](../../assets/blog/Pre-rendering-va-Data-Fetching-trong-Next.js-6.png)
 
 **Client-side Rendering** có thể ứng dụng vào các trang web mang tính bảo mật, không có nhu cầu về SEO, và đặc biệt là không cần render trước (pre-render). Dữ liệu của trang cập nhật thường xuyên, yêu cầu fetch data tại request-time.
 

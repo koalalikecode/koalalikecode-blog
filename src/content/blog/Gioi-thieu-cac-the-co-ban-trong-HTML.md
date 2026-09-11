@@ -4,7 +4,7 @@ description: "Chỉ với một số thẻ HTML thông dụng, bạn đã hoàn 
 slug: "Gioi-thieu-cac-the-co-ban-trong-HTML"
 pubDate: 2022-08-22T03:01:30.839Z
 updatedDate: 2022-08-22T03:01:30.839Z
-heroImage: "./Gioi-thieu-cac-the-co-ban-trong-HTML-hero.png"
+heroImage: "../../assets/blog/Gioi-thieu-cac-the-co-ban-trong-HTML-hero.png"
 tags: ["html", "frontend"]
 categories: ["code"]
 legacyId: "6302f18a6d7c2c965ee16e47"
@@ -143,7 +143,7 @@ Với nhu cầu code web ngày càng phổ biến và rỗng rãi hơn, các th�
 
 Chúng ta có thể nhận thấy rằng tên các thẻ semantic hiển thị rõ ý nghĩa và chức năng của từng thẻ. Trước khi có các thẻ này người ta thường dùng thẻ div kèm với id hay class để chia các thành phần trang bởi vì tính chất của các thẻ này là như nhau. Mặc dù vậy, các bạn mới làm quen với HTML nên học dùng các thẻ này luôn để có cái nhìn tổng quát về cấu trúc trang web.
 
-![Sematic_tags](./Gioi-thieu-cac-the-co-ban-trong-HTML-1.jpg)
+![Sematic_tags](../../assets/blog/Gioi-thieu-cac-the-co-ban-trong-HTML-1.jpg)
 
 ### Các thẻ định dạng văn bản
 

@@ -4,7 +4,7 @@ description: "CI/CD is a method to frequently deliver apps to customers by intro
 slug: "CI-CD-and-Tools"
 pubDate: 2023-12-25T04:19:13.704Z
 updatedDate: 2023-12-25T04:19:13.704Z
-heroImage: "./CI-CD-and-Tools-hero.png"
+heroImage: "../../assets/blog/CI-CD-and-Tools-hero.png"
 tags: ["ci-cd", "devops"]
 categories: ["code"]
 legacyId: "658902c1609ba45ab75d9ee8"
@@ -24,7 +24,7 @@ In theory, with continuous delivery, you can decide to release daily, weekly, fo
 ### Continuous deployment
 Continuous deployment goes one step further than continuous delivery. With this practice, every change that passes all stages of your production pipeline is released to your customers. There's no human intervention, and only a failed test will prevent a new change to be deployed to production.
 Continuous deployment is an excellent way to accelerate the feedback loop with your customers and take pressure off the team as there isn't a "release day" anymore. Developers can focus on building software, and they see their work go live minutes after they've finished working on it.
-![](./CI-CD-and-Tools-1.png)
+![](../../assets/blog/CI-CD-and-Tools-1.png)
 ### Some popular CI/CD tools
 - [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
 - [Azure DevOps](https://azure.microsoft.com/en-us/services/devops/pipelines/)
@@ -37,9 +37,9 @@ Continuous deployment is an excellent way to accelerate the feedback loop with y
 ## Jenkins
 ### What Is Jenkins?
 Jenkins is an open-source solution comprising an automation server to enable continuous integration and continuous delivery (CI/CD), automating the various stages of software development such as build, test, and deployment.
-![](./CI-CD-and-Tools-2.png)
+![](../../assets/blog/CI-CD-and-Tools-2.png)
 ### Key Features of Jenkins
-![](./CI-CD-and-Tools-3.png)
+![](../../assets/blog/CI-CD-and-Tools-3.png)
 #### A variety of plugins
 - Jenkins plugins are extensions to the Jenkins system. Providing integration points for [CI/CD tools,](https://www.spiceworks.com/tech/devops/articles/best-cicd-tools/ "CI/CD tools,") sources and destinations is among the most prevalent plugin applications.
 - They also aid with the expansion of Jenkins’ capabilities as well as the integration of Jenkins with other software. Plugins may be downloaded and installed using the Jenkins Web UI or CLI from the Jenkins Plugin repository.
@@ -96,7 +96,7 @@ GitHub Actions is a continuous integration and continuous delivery (CI/CD) platf
 A _GitHub Actions workflow_ is a process that you set up in your repository to automate software-development lifecycle tasks, including GitHub Actions. With a workflow, you can build, test, package, release, and deploy any project on GitHub.
 To create a workflow, you add actions to a .yml file in the `.github/workflows` directory in your GitHub repository.
 ### The components of GitHub Actions
-![](./CI-CD-and-Tools-4.png)
+![](../../assets/blog/CI-CD-and-Tools-4.png)
 #### Workflows
 A workflow is an automated process that you add to your repository. A workflow needs to have at least one job, and different events can trigger it. You can use it to build, test, package, release, or deploy your repository's project on GitHub.
 #### Jobs

@@ -4,7 +4,7 @@ description: "JavaScript cung cấp cho chúng ta ba cơ chế để lưu trữ 
 slug: "Local-Storage-Session-Storage-va-Cookies-trong-JavaScript"
 pubDate: 2024-01-30T04:55:09.290Z
 updatedDate: 2024-01-30T04:55:09.290Z
-heroImage: "./Local-Storage-Session-Storage-va-Cookies-trong-JavaScript-hero.png"
+heroImage: "../../assets/blog/Local-Storage-Session-Storage-va-Cookies-trong-JavaScript-hero.png"
 tags: ["javaScript"]
 categories: ["code"]
 legacyId: "65b8812d2e955bb448f29644"

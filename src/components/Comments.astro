@@ -1,0 +1,60 @@
+---
+/**
+ * Bình luận bằng Giscus - dựa trên GitHub Discussions.
+ * Không cần database, không cần chống spam, không có lỗ hổng XSS
+ * vì nội dung do GitHub render trong iframe riêng.
+ *
+ * Cần làm trước khi dùng:
+ *   1. Bật Discussions trong Settings của repo trên GitHub
+ *   2. Cài app Giscus: https://github.com/apps/giscus
+ *   3. Vào https://giscus.app lấy repoId và categoryId, điền vào dưới đây
+ */
+const GISCUS = {
+  repo: "koalalikecode/koalalikecode-blog",
+  repoId: "", // lấy từ giscus.app
+  category: "Announcements",
+  categoryId: "", // lấy từ giscus.app
+};
+
+const configured = GISCUS.repoId !== "" && GISCUS.categoryId !== "";
+---
+
+{
+  configured ? (
+    <div class="giscus"></div>
+  ) : (
+    <p class="text-sm" style="color: var(--text-muted);">
+      Bình luận chưa được cấu hình. Xem hướng dẫn trong
+      <code
+        class="rounded px-1 py-0.5 text-xs"
+        style="background: var(--bg-subtle); border: 1px solid var(--border);"
+      >
+        src/components/Comments.astro
+      </code>
+      .
+    </p>
+  )
+}
+
+{
+  configured && (
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={GISCUS.repo}
+      data-repo-id={GISCUS.repoId}
+      data-category={GISCUS.category}
+      data-category-id={GISCUS.categoryId}
+      data-mapping="pathname"
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="preferred_color_scheme"
+      data-lang="vi"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async
+    />
+  )
+}

@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostListItem from "../../components/PostListItem.astro";
+import { getPublishedPosts, postUrl, readingTime } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`Thẻ: ${tag}`}
+  description={`Các bài viết về ${tag} trên blog.`}
+>
+  <div class="mb-8">
+    <a
+      href="/tags"
+      class="mb-3 inline-block text-sm transition-colors hover:underline"
+      style="color: var(--text-muted); text-underline-offset: 0.2em;"
+    >
+      ← Tất cả thẻ
+    </a>
+    <h1 class="text-2xl font-semibold tracking-tight">{tag}</h1>
+    <p class="mt-1 text-sm" style="color: var(--text-muted);">
+      {posts.length} bài viết
+    </p>
+  </div>
+
+  <div>
+    {
+      posts.map((post) => (
+        <PostListItem
+          title={post.data.title}
+          description={post.data.description}
+          href={postUrl(post)}
+          pubDate={post.data.pubDate}
+          readingTime={readingTime(post.body ?? "")}
+          tags={post.data.tags}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

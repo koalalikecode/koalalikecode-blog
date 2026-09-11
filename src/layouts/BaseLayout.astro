@@ -1,0 +1,53 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+  /** Bỏ khung bọc mặc định khi trang tự lo layout riêng */
+  bare?: boolean;
+}
+
+const { bare = false, ...head } = Astro.props;
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <BaseHead {...head} />
+  </head>
+
+  <body class="flex min-h-screen flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:px-3 focus:py-2"
+      style="background: var(--bg-subtle); color: var(--text);"
+    >
+      Bỏ qua, tới nội dung chính
+    </a>
+
+    <Header />
+
+    <main id="main" class="flex-1">
+      {
+        bare ? (
+          <slot />
+        ) : (
+          <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+            <slot />
+          </div>
+        )
+      }
+    </main>
+
+    <Footer />
+  </body>
+</html>

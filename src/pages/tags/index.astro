@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getTagCounts } from "../../lib/posts";
+
+const tags = await getTagCounts();
+---
+
+<BaseLayout title="Thẻ" description="Toàn bộ chủ đề trên blog.">
+  <h1 class="mb-8 text-2xl font-semibold tracking-tight">Thẻ</h1>
+
+  {
+    tags.length === 0 ? (
+      <p style="color: var(--text-muted);">Chưa có thẻ nào.</p>
+    ) : (
+      <ul class="flex flex-wrap gap-2.5">
+        {tags.map(({ tag, count }) => (
+          <li>
+            <a
+              href={`/tags/${encodeURIComponent(tag)}`}
+              class="inline-flex items-baseline gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors hover:border-current"
+              style="border-color: var(--border); color: var(--text);"
+            >
+              {tag}
+              <span class="text-xs" style="color: var(--text-faint);">
+                {count}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>

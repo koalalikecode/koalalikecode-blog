@@ -1,0 +1,134 @@
+---
+import { SITE_TITLE, NAV_LINKS } from "../consts";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header
+  class="sticky top-0 z-50 border-b backdrop-blur-md"
+  style="background: color-mix(in srgb, var(--bg) 85%, transparent); border-color: var(--border);"
+>
+  <div class="mx-auto flex h-14 max-w-3xl items-center justify-between px-4 sm:px-6">
+    <a
+      href="/"
+      class="font-semibold tracking-tight transition-opacity hover:opacity-70"
+      style="color: var(--text);"
+    >
+      {SITE_TITLE}
+    </a>
+
+    <nav class="flex items-center gap-1 sm:gap-2" aria-label="Điều hướng chính">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            class="rounded-md px-2 py-1 text-sm transition-colors sm:px-3"
+            style={`color: ${isActive(link.href) ? "var(--text)" : "var(--text-muted)"};`}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+
+      <a
+        href="/search"
+        class="rounded-md p-2 transition-colors"
+        style="color: var(--text-muted);"
+        aria-label="Tìm kiếm"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </a>
+
+      <button
+        id="theme-toggle"
+        type="button"
+        class="rounded-md p-2 transition-colors"
+        style="color: var(--text-muted);"
+        aria-label="Đổi giao diện sáng/tối"
+      >
+        <svg
+          class="block dark-hidden"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+          ></path>
+        </svg>
+        <svg
+          class="hidden dark-shown"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Đổi icon mặt trời/mặt trăng theo theme đang bật.
+     Xử lý cả 3 trạng thái: chọn sáng, chọn tối, và để hệ thống tự quyết. */
+  :global(:root[data-theme="dark"]) .dark-hidden {
+    display: none;
+  }
+  :global(:root[data-theme="dark"]) .dark-shown {
+    display: block;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .dark-hidden {
+      display: none;
+    }
+    :global(:root:not([data-theme="light"])) .dark-shown {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("theme-toggle");
+
+  btn?.addEventListener("click", () => {
+    const root = document.documentElement;
+    // Nếu chưa chọn thủ công, suy ra theme hiện tại từ hệ thống rồi đảo ngược
+    const current =
+      root.getAttribute("data-theme") ??
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = current === "dark" ? "light" : "dark";
+
+    root.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Bỏ qua khi trình duyệt chặn lưu trữ - theme vẫn đổi trong phiên này
+    }
+  });
+</script>

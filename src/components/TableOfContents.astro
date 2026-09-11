@@ -1,0 +1,98 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// Chỉ lấy h2 và h3 - sâu hơn nữa mục lục sẽ rối
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  items.length >= 3 && (
+    <nav
+      class="mb-10 rounded-lg border p-4"
+      style="border-color: var(--border); background: var(--bg-subtle);"
+      aria-label="Mục lục"
+    >
+      <details open>
+        <summary
+          class="cursor-pointer text-xs font-medium uppercase tracking-widest"
+          style="color: var(--text-faint);"
+        >
+          Mục lục
+        </summary>
+        <ul class="mt-3 space-y-1.5 text-sm">
+          {items.map((h) => (
+            <li class={h.depth === 3 ? "pl-4" : ""}>
+              <a
+                href={`#${h.slug}`}
+                class="toc-link transition-colors hover:underline"
+                style="color: var(--text-muted); text-underline-offset: 0.2em;"
+              >
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </nav>
+  )
+}
+
+<style>
+  /* Mục đang đọc được tô đậm - đặt bởi IntersectionObserver bên dưới */
+  .toc-link[data-current="true"] {
+    color: var(--accent) !important;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  // Tô sáng mục đang đọc.
+  // Dùng IntersectionObserver thay vì tính offsetTop trong sự kiện scroll:
+  // trình duyệt tự lo, không gây layout thrashing, không chạy code mỗi khung hình.
+  const links = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+  if (links.length > 0) {
+    const byId = new Map<string, HTMLAnchorElement>();
+    links.forEach((link) => {
+      const id = decodeURIComponent(link.hash.slice(1));
+      if (id) byId.set(id, link);
+    });
+
+    const visible = new Set<string>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id;
+          if (entry.isIntersecting) visible.add(id);
+          else visible.delete(id);
+        }
+
+        // Mục đang hiện nằm cao nhất trên màn hình là mục đang đọc
+        let current: string | null = null;
+        for (const [id] of byId) {
+          if (visible.has(id)) {
+            current = id;
+            break;
+          }
+        }
+
+        byId.forEach((link, id) => {
+          link.dataset.current = String(id === current);
+        });
+      },
+      // Chỉ tính vùng phía trên màn hình để mục nhảy đúng lúc người đọc tới
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 }
+    );
+
+    byId.forEach((_, id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+</script>

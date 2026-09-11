@@ -4,7 +4,7 @@ description: "In system design, when we scale horizontally (aka throw in more se
 slug: "Consistent-Hashing"
 pubDate: 2025-08-03T16:56:48.141Z
 updatedDate: 2025-08-03T16:56:48.141Z
-heroImage: "./Consistent-Hashing-hero.png"
+heroImage: "../../assets/blog/Consistent-Hashing-hero.png"
 tags: ["system-design"]
 categories: ["code"]
 legacyId: "688f94d0bd4c912af8804a99"
@@ -35,7 +35,7 @@ This basically tells us which server a key should go to, based on its hash value
 | key7 | 22530351 | 3        |
 
 From the table above, if we want to get the value for `key1`, the client will use `hash(key1) % 4`, which equals to `0`, so the request goes to **server 0**. The same logic applies to other keys.
-![Keys distribution with 4 servers](./Consistent-Hashing-1.png)
+![Keys distribution with 4 servers](../../assets/blog/Consistent-Hashing-1.png)
 This method works well as long as the number of servers stays the same, and the data distribution is even. But here's the catch: if we add or remove servers, things break down. For instance, let's say **server 1 goes offline**, and now we only have **3 servers**. We're still using the same hash function, so each key still gets the same hash value, but because we're now doing `hash(key1) % 3`, most keys will be assigned to **different servers**. Here’s how the new server assignments would look after reducing the pool to 3 servers:
 
 | key  | hash     | hash % 3 |
@@ -49,7 +49,7 @@ This method works well as long as the number of servers stays the same, and the 
 | key6 | 38164978 | 1        |
 | key7 | 22530351 | 0        |
 
-![Keys Distribution with 3 servers](./Consistent-Hashing-2.png)
+![Keys Distribution with 3 servers](../../assets/blog/Consistent-Hashing-2.png)
 As shown in the figure above, most of the keys are now mapped to different servers, not just the ones that were originally stored on the failed server (server 1).
 You can tell where each key originally belonged by its color. This highlight an important issue: even though the data itself hasn't changed, clients may now be looking in the wrong places. That leads to a surge in cache miss, increased latency, and unnecessary load on the system.
 This is exactly the kind of problem that **consistent hashing** is designed to solve.
@@ -60,26 +60,26 @@ This is exactly the kind of problem that **consistent hashing** is designed to s
 ### Hash space and hash ring
 Now that we know what consistent hashing is, let's see how it actually works behind the scenes.
 When a hash function like SHA-1 is used, it maps every input (like a server or a key) to a number in a huge range, from `0` to `2^160-1`. We call this range the **hash space**.
-![Image](./Consistent-Hashing-3.png)
+![Image](../../assets/blog/Consistent-Hashing-3.png)
 Since this space is too large to draw as a straight line, we often imagine it as a circle, where the smallest and largest values are next to each other. This circle is called the **hash ring**.
-![Image](./Consistent-Hashing-4.png)
+![Image](../../assets/blog/Consistent-Hashing-4.png)
 ### Hash servers
 Now we treat the servers (typically their IPs or names) as input to the same hash function `f`. The resulting hash values are then mapped onto the ring, as shown in the figure below.
-![Image](./Consistent-Hashing-5.png)
+![Image](../../assets/blog/Consistent-Hashing-5.png)
 ### Hash keys
 Just like we did with the servers, we now place the 4 keys (key0 to key3) onto the hash ring, as shown below.
-![Image](./Consistent-Hashing-6.png)
+![Image](../../assets/blog/Consistent-Hashing-6.png)
 ### Server lookup
 So how do we know which server stores which key? It's simple: just start from the key's position on the ring, then move clockwise until we hit a server. For example, in the figure below: key0 lands on server0, key1 on server 1, key2 on server2, and key3 on server 3.
-![Image](./Consistent-Hashing-7.png)
+![Image](../../assets/blog/Consistent-Hashing-7.png)
 ### Add a server
 This approach solves the problem of too many keys being moved when we add a new server.  
 In the diagram below, adding server 4 only affects key0, it's the first server that key0 hits when we go clockwise.  
 The rest (key1, key2, key3) stay where they are. Neat, right?
-![Image](./Consistent-Hashing-8.png)
+![Image](../../assets/blog/Consistent-Hashing-8.png)
 ### Remove a server
 In the same way, if a server goes offline, only a small number of keys are affected. In the diagram below, when _server 1_ is removed, only _key1_ moves to _server 2_. All other keys stay where they are.
-![image](./Consistent-Hashing-9.png)
+![image](../../assets/blog/Consistent-Hashing-9.png)
 ### Issues in the basic approach
 The basic steps of consistent hashing are:
 - Map servers and keys onto the ring using a uniformly distributed hash function.
@@ -91,9 +91,9 @@ That’s where _virtual nodes_ (or _replicas_) come in.
 ### Virtual Nodes
 Now, instead of being represented by a single node, each server is represented by **multiple virtual nodes** on the ring. As shown in the figure below, both _server 1_ and _server 3_ have three virtual nodes each. In real-world systems, the number of virtual nodes per server is usually much higher.
 For example, _server 0_ is now represented by _s0-0_, _s0-1_, and _s0-2_ on the ring. Similarly, _s1-0_, _s1-1_, and _s1-2_ represent _server 1_. Each of these virtual nodes is responsible for a portion of the hash ring.
-![Image](./Consistent-Hashing-10.png)
+![Image](../../assets/blog/Consistent-Hashing-10.png)
 The same method is used to determine where a key is stored: go clockwise from the key’s position until a virtual node is found. In the figure below, we can see that _k0_ lands on _s1-1_, which belongs to _server 1_.
-![Image](./Consistent-Hashing-11.png)
+![Image](../../assets/blog/Consistent-Hashing-11.png)
 Increasing the number of virtual nodes helps balance the distribution of keys across servers. This is because more virtual nodes reduce variation, making the distribution more even.
 For example, a study shows that with 100–200 virtual nodes, the standard deviation drops to 5–10% of the mean. While adding more virtual nodes improves balance, it also increases metadata overhead. So the number of virtual nodes should be tuned based on system needs.
 ## TL;DR:

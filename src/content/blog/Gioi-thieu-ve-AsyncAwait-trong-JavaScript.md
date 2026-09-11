@@ -4,7 +4,7 @@ description: "Khi nhắc đến xử lý bất đồng bộ trong JavaScript, ch
 slug: "Gioi-thieu-ve-AsyncAwait-trong-JavaScript"
 pubDate: 2023-01-12T08:01:18.051Z
 updatedDate: 2023-01-12T08:01:18.051Z
-heroImage: "./Gioi-thieu-ve-AsyncAwait-trong-JavaScript-hero.png"
+heroImage: "../../assets/blog/Gioi-thieu-ve-AsyncAwait-trong-JavaScript-hero.png"
 tags: ["javaScript"]
 categories: ["code"]
 legacyId: "63bfbe4ebda80370e9926db7"

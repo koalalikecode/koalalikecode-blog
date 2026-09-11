@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Tìm kiếm" description="Tìm bài viết trên blog.">
+  <h1 class="mb-6 text-2xl font-semibold tracking-tight">Tìm kiếm</h1>
+
+  <div id="search"></div>
+
+  <noscript>
+    <p style="color: var(--text-muted);">
+      Tìm kiếm cần bật JavaScript. Bạn có thể xem toàn bộ bài viết ở
+      <a href="/" style="color: var(--accent); text-decoration: underline;">trang chủ</a>.
+    </p>
+  </noscript>
+</BaseLayout>
+
+<style is:global>
+  /* Ghép giao diện mặc định của Pagefind vào hệ màu của site */
+  :root {
+    --pagefind-ui-scale: 0.85;
+    --pagefind-ui-primary: var(--text);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--bg);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-tag: var(--bg-subtle);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 0.5rem;
+    --pagefind-ui-font: var(--font-sans);
+  }
+
+  .pagefind-ui__result-title a {
+    color: var(--text) !important;
+  }
+
+  .pagefind-ui__result-excerpt mark {
+    background: var(--selection);
+    color: var(--text);
+    border-radius: 2px;
+  }
+</style>
+
+<script>
+  // Pagefind chỉ tồn tại SAU khi `astro build` chạy xong (bước tạo chỉ mục).
+  // Phải nạp bằng thẻ <script> lúc chạy, không dùng import():
+  // bundler sẽ cố resolve đường dẫn lúc build và báo lỗi vì file chưa tồn tại.
+  function loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const el = document.createElement("script");
+      el.src = src;
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error(`Không nạp được ${src}`));
+      document.head.appendChild(el);
+    });
+  }
+
+  async function initSearch() {
+    const container = document.getElementById("search");
+    if (!container) return;
+
+    try {
+      const css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = "/pagefind/pagefind-ui.css";
+      document.head.appendChild(css);
+
+      await loadScript("/pagefind/pagefind-ui.js");
+
+      // @ts-expect-error - PagefindUI được script trên gắn vào window
+      new window.PagefindUI({
+        element: "#search",
+        showSubResults: true,
+        showImages: false,
+        excerptLength: 25,
+        translations: {
+          placeholder: "Tìm bài viết...",
+          zero_results: "Không tìm thấy kết quả cho [SEARCH_TERM]",
+          many_results: "[COUNT] kết quả cho [SEARCH_TERM]",
+          one_result: "1 kết quả cho [SEARCH_TERM]",
+          searching: "Đang tìm [SEARCH_TERM]...",
+        },
+      });
+    } catch {
+      container.innerHTML =
+        '<p style="color: var(--text-muted);">Chỉ mục tìm kiếm chưa được tạo. Chạy <code>npm run build</code> rồi <code>npm run preview</code> để dùng thử.</p>';
+    }
+  }
+
+  initSearch();
+</script>

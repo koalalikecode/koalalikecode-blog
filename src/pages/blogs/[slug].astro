@@ -1,0 +1,150 @@
+---
+import { render } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
+import Comments from "../../components/Comments.astro";
+import { getPublishedPosts, postUrl, readingTime, getRelatedPosts } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({
+    // Dùng slug trong frontmatter, không dùng tên file, để URL khớp hệt blog cũ
+    params: { slug: post.data.slug },
+    props: { post, all: posts },
+  }));
+}
+
+const { post, all } = Astro.props;
+const { Content, headings } = await render(post);
+const related = getRelatedPosts(post, all);
+const minutes = readingTime(post.body ?? "");
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  publishedTime={post.data.pubDate}
+  modifiedTime={post.data.updatedDate}
+  tags={post.data.tags}
+>
+  <article>
+    <header class="mb-8">
+      <div
+        class="mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs"
+        style="color: var(--text-faint);"
+      >
+        <FormattedDate date={post.data.pubDate} />
+        <span aria-hidden="true">·</span>
+        <span>{minutes} phút đọc</span>
+      </div>
+
+      <h1 class="mb-4 text-3xl font-semibold tracking-tight sm:text-2xl">
+        {post.data.title}
+      </h1>
+
+      <p class="text-base leading-relaxed" style="color: var(--text-muted);">
+        {post.data.description}
+      </p>
+
+      {
+        post.data.tags.length > 0 && (
+          <div class="mt-5 flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <a
+                href={`/tags/${encodeURIComponent(tag)}`}
+                class="rounded-full border px-2.5 py-0.5 text-xs transition-colors"
+                style="border-color: var(--border); color: var(--text-muted);"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      post.data.heroImage && (
+        <Image
+          src={post.data.heroImage}
+          alt=""
+          widths={[480, 768, 1200]}
+          sizes="(max-width: 768px) 100vw, 768px"
+          loading="eager"
+          class="mb-10 w-full rounded-lg border"
+          style="border-color: var(--border);"
+        />
+      )
+    }
+
+    <TableOfContents headings={headings} />
+
+    <div class="prose" data-pagefind-body>
+      <Content />
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="mt-16 border-t pt-8" style="border-color: var(--border);">
+        <h2
+          class="mb-4 text-xs font-medium uppercase tracking-widest"
+          style="color: var(--text-faint);"
+        >
+          Bài liên quan
+        </h2>
+        <ul class="space-y-3">
+          {related.map((r) => (
+            <li>
+              <a href={postUrl(r)} class="group block">
+                <span class="text-sm font-medium transition-colors group-hover:underline" style="text-underline-offset: 0.2em;">
+                  {r.data.title}
+                </span>
+                <span class="ml-2 text-xs" style="color: var(--text-faint);">
+                  <FormattedDate date={r.data.pubDate} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="mt-16 border-t pt-8" style="border-color: var(--border);">
+    <h2
+      class="mb-4 text-xs font-medium uppercase tracking-widest"
+      style="color: var(--text-faint);"
+    >
+      Bình luận
+    </h2>
+    <Comments />
+  </section>
+</BaseLayout>
+
+<script>
+  // Thêm link neo cạnh mỗi heading để chia sẻ trực tiếp tới từng mục.
+  // Astro đã sinh sẵn id cho heading lúc build, nên link này tồn tại trong HTML tĩnh.
+  document.querySelectorAll<HTMLElement>(".prose h2[id], .prose h3[id], .prose h4[id]").forEach(
+    (heading) => {
+      const anchor = document.createElement("a");
+      anchor.href = `#${heading.id}`;
+      anchor.className = "heading-anchor";
+      anchor.textContent = "#";
+      anchor.setAttribute("aria-label", `Liên kết tới mục ${heading.textContent ?? ""}`);
+      heading.appendChild(anchor);
+    }
+  );
+
+  // Bọc bảng trong khung cuộn ngang để không làm vỡ layout trên mobile
+  document.querySelectorAll(".prose table").forEach((table) => {
+    if (table.parentElement?.classList.contains("table-wrapper")) return;
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-wrapper";
+    table.parentNode?.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+</script>

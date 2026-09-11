@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { AUTHOR, SOCIALS } from "../consts";
+---
+
+<BaseLayout title="Giới thiệu" description={`Đôi dòng về ${AUTHOR.name}.`}>
+  <h1 class="mb-6 text-2xl font-semibold tracking-tight">Giới thiệu</h1>
+
+  <div class="prose">
+    <p>
+      Chào bạn, tôi là {AUTHOR.name}, viết blog dưới tên <strong>{AUTHOR.handle}</strong>.
+    </p>
+    <p>
+      Đây là nơi tôi ghi lại những gì mình học được về phát triển web, system design
+      và vài thứ linh tinh khác. Viết ra giúp tôi hiểu kỹ hơn, và biết đâu lại giúp
+      được bạn.
+    </p>
+    <p>Bạn có thể tìm tôi ở:</p>
+    <ul>
+      {
+        SOCIALS.filter((s) => s.label !== "RSS").map((s) => (
+          <li>
+            <a href={s.href} target="_blank" rel="me noopener">
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      Blog có <a href="/rss.xml">RSS</a> nếu bạn muốn theo dõi bài mới.
+    </p>
+  </div>
+</BaseLayout>
