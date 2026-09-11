@@ -7,7 +7,7 @@ interface Props {
 
 const { headings } = Astro.props;
 
-// Chỉ lấy h2 và h3 - sâu hơn nữa mục lục sẽ rối
+// Only h2 and h3 - deeper levels make the outline noisy
 const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
@@ -16,14 +16,14 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
     <nav
       class="mb-10 rounded-lg border p-4"
       style="border-color: var(--border); background: var(--bg-subtle);"
-      aria-label="Mục lục"
+      aria-label="Table of contents"
     >
       <details open>
         <summary
           class="cursor-pointer text-xs font-medium uppercase tracking-widest"
           style="color: var(--text-faint);"
         >
-          Mục lục
+          Contents
         </summary>
         <ul class="mt-3 space-y-1.5 text-sm">
           {items.map((h) => (
@@ -44,7 +44,7 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
 }
 
 <style>
-  /* Mục đang đọc được tô đậm - đặt bởi IntersectionObserver bên dưới */
+  /* The section being read, set by the IntersectionObserver below */
   .toc-link[data-current="true"] {
     color: var(--accent) !important;
     font-weight: 500;
@@ -52,9 +52,9 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
 </style>
 
 <script>
-  // Tô sáng mục đang đọc.
-  // Dùng IntersectionObserver thay vì tính offsetTop trong sự kiện scroll:
-  // trình duyệt tự lo, không gây layout thrashing, không chạy code mỗi khung hình.
+  // Highlight the section currently being read.
+  // IntersectionObserver rather than measuring offsetTop in a scroll handler:
+  // the browser does the work, no layout thrashing, no code running every frame.
   const links = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
   if (links.length > 0) {
     const byId = new Map<string, HTMLAnchorElement>();
@@ -73,7 +73,7 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
           else visible.delete(id);
         }
 
-        // Mục đang hiện nằm cao nhất trên màn hình là mục đang đọc
+        // The topmost visible heading is the one being read
         let current: string | null = null;
         for (const [id] of byId) {
           if (visible.has(id)) {
@@ -86,7 +86,7 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
           link.dataset.current = String(id === current);
         });
       },
-      // Chỉ tính vùng phía trên màn hình để mục nhảy đúng lúc người đọc tới
+      // Only count the upper part of the viewport so the highlight moves at the right time
       { rootMargin: "-80px 0px -70% 0px", threshold: 0 }
     );
 

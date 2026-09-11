@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /*
-  Hệ thống thiết kế - minimalism, ưu tiên khả năng đọc.
-  Nguyên tắc: nền trung tính, đúng MỘT màu nhấn, không gradient, không đổ bóng nhiều lớp.
-  Phân cấp thị giác tạo bằng khoảng trắng và cỡ chữ, không tạo bằng màu sắc.
+  Design system - minimalism, optimised for reading.
+  Rules: neutral background, exactly ONE accent colour, no gradients, no stacked shadows.
+  Visual hierarchy comes from whitespace and type scale, not from colour.
 */
 
 @theme {
@@ -11,13 +11,13 @@
   --font-serif: "Newsreader", ui-serif, Georgia, Cambria, serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", monospace;
 
-  /* Độ dài dòng tối ưu cho việc đọc */
+  /* Comfortable measure for reading */
   --container-reading: 68ch;
 }
 
 /*
-  Bảng màu định nghĩa ở :root (sáng), ghi đè trong dark.
-  Mọi màu đều có định nghĩa gốc ở đây - không màu nào chỉ tồn tại trong media query.
+  Palette defined on :root (light) and overridden for dark.
+  Every colour has a base definition here - none exists only inside a media query.
 */
 :root {
   color-scheme: light;
@@ -49,7 +49,7 @@
   --selection: #1e3a5f;
 }
 
-/* Người dùng để hệ thống tự quyết mà OS đang dark */
+/* Visitor left the theme on "system" and the OS is in dark mode */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
@@ -70,7 +70,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Chừa chỗ cho thanh điều hướng dính khi nhảy tới anchor */
+    /* Leave room for the sticky header when jumping to an anchor */
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
   }
@@ -102,7 +102,7 @@
     color: var(--text);
   }
 
-  /* Chỉ hiện viền focus khi điều hướng bằng bàn phím */
+  /* Show the focus ring only for keyboard navigation */
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -124,7 +124,7 @@
     text-wrap: balance;
   }
 
-  /* Tránh chữ mồ côi ở cuối đoạn */
+  /* Avoid orphan words at the end of paragraphs */
   p {
     text-wrap: pretty;
   }
@@ -136,9 +136,9 @@
 }
 
 /*
-  Kiểu chữ cho nội dung bài viết.
-  Viết tay thay vì dùng @tailwindcss/typography để kiểm soát hoàn toàn
-  và không kéo thêm CSS thừa.
+  Typography for article content.
+  Hand-written instead of @tailwindcss/typography for full control
+  and to avoid shipping unused CSS.
 */
 @layer components {
   .prose {
@@ -170,7 +170,7 @@
     font-size: 1.05rem;
   }
 
-  /* Link anchor cạnh heading - chỉ hiện khi hover vào heading */
+  /* Anchor link beside a heading - only visible on heading hover */
   .prose :is(h2, h3, h4) .heading-anchor {
     opacity: 0;
     margin-left: 0.4em;
@@ -229,7 +229,7 @@
     font-style: italic;
   }
 
-  /* Code inline - phân biệt bằng nền nhạt, không dùng màu nhấn */
+  /* Inline code - distinguished by a subtle background, not by the accent colour */
   .prose :not(pre) > code {
     background: var(--bg-subtle);
     border: 1px solid var(--border);
@@ -252,7 +252,7 @@
     margin-block: 2.5em;
   }
 
-  /* Bảng phải cuộn ngang được trên mobile thay vì làm vỡ trang */
+  /* Tables scroll horizontally on mobile instead of breaking the layout */
   .prose .table-wrapper {
     overflow-x: auto;
   }

@@ -5,12 +5,12 @@ import { getTagCounts } from "../../lib/posts";
 const tags = await getTagCounts();
 ---
 
-<BaseLayout title="Thẻ" description="Toàn bộ chủ đề trên blog.">
-  <h1 class="mb-8 text-2xl font-semibold tracking-tight">Thẻ</h1>
+<BaseLayout title="Tags" description="All topics on the blog.">
+  <h1 class="mb-8 text-2xl font-semibold tracking-tight">Tags</h1>
 
   {
     tags.length === 0 ? (
-      <p style="color: var(--text-muted);">Chưa có thẻ nào.</p>
+      <p style="color: var(--text-muted);">No tags yet.</p>
     ) : (
       <ul class="flex flex-wrap gap-2.5">
         {tags.map(({ tag, count }) => (

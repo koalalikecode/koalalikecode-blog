@@ -1,17 +1,18 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "zod";
 import { glob } from "astro/loaders";
 
 const blog = defineCollection({
-  // Content Layer API: nạp mọi file .md/.mdx trong src/content/blog
+  // Content Layer API: load every .md/.mdx file under src/content/blog
   loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
 
-  // image() cho phép Astro tối ưu ảnh hero (resize, webp, chống layout shift)
+  // image() lets Astro optimise the hero image (resize, webp, no layout shift)
   schema: ({ image }) =>
     z.object({
       title: z.string(),
       description: z.string(),
 
-      // Giữ nguyên slug từ blog cũ để URL /blogs/<slug> không đổi
+      // Carried over from the old blog so /blogs/<slug> URLs stay identical
       slug: z.string(),
 
       pubDate: z.coerce.date(),
@@ -22,10 +23,10 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       categories: z.array(z.string()).default([]),
 
-      // _id cũ trong MongoDB, giữ lại để đối chiếu comment cũ khi cần
+      // Old MongoDB _id, kept for cross-referencing the archived comments
       legacyId: z.string().optional(),
 
-      // Bài nháp sẽ không xuất hiện ở production
+      // Drafts are hidden from production builds
       draft: z.boolean().default(false),
     }),
 });

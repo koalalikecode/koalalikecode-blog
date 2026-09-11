@@ -3,8 +3,8 @@ import { getCollection, type CollectionEntry } from "astro:content";
 export type Post = CollectionEntry<"blog">;
 
 /**
- * Lấy toàn bộ bài viết đã xuất bản, mới nhất trước.
- * Bài draft bị loại ở production nhưng vẫn hiện khi chạy dev.
+ * Every published post, newest first.
+ * Drafts are excluded from production builds but still show up in dev.
  */
 export async function getPublishedPosts(): Promise<Post[]> {
   const posts = await getCollection("blog", ({ data }) =>
@@ -13,15 +13,15 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-/** URL của bài viết. Giữ nguyên tiền tố /blogs/ của blog cũ để không mất SEO. */
+/** Post URL. Keeps the old blog's /blogs/ prefix so existing links and SEO survive. */
 export function postUrl(post: Post): string {
   return `/blogs/${post.data.slug}`;
 }
 
 /**
- * Ước lượng thời gian đọc.
- * Đếm cả từ tiếng Việt (tách theo khoảng trắng) lẫn ký tự CJK,
- * bỏ qua code block vì người đọc lướt code nhanh hơn văn xuôi.
+ * Rough reading time.
+ * Counts whitespace-separated words and skips fenced code blocks,
+ * since readers skim code faster than prose.
  */
 export function readingTime(markdown: string): number {
   const withoutCode = markdown.replace(/```[\s\S]*?```/g, "");
@@ -29,7 +29,7 @@ export function readingTime(markdown: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
-/** Đếm số bài theo từng thẻ, sắp xếp nhiều nhất trước. */
+/** Post count per tag, most used first. */
 export async function getTagCounts(): Promise<{ tag: string; count: number }[]> {
   const posts = await getPublishedPosts();
   const counts = new Map<string, number>();
@@ -46,8 +46,8 @@ export async function getTagCounts(): Promise<{ tag: string; count: number }[]> 
 }
 
 /**
- * Tìm bài liên quan dựa trên số thẻ trùng nhau.
- * Nếu không đủ bài cùng thẻ thì bù thêm bài mới nhất.
+ * Related posts ranked by how many tags they share with the current one.
+ * Falls back to the most recent posts when there aren't enough tag matches.
  */
 export function getRelatedPosts(current: Post, all: Post[], limit = 3): Post[] {
   const currentTags = new Set(current.data.tags);

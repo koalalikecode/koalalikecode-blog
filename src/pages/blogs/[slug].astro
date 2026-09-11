@@ -10,7 +10,7 @@ import { getPublishedPosts, postUrl, readingTime, getRelatedPosts } from "../../
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
   return posts.map((post) => ({
-    // Dùng slug trong frontmatter, không dùng tên file, để URL khớp hệt blog cũ
+    // Use the frontmatter slug, not the filename, so URLs match the old blog exactly
     params: { slug: post.data.slug },
     props: { post, all: posts },
   }));
@@ -38,7 +38,7 @@ const minutes = readingTime(post.body ?? "");
       >
         <FormattedDate date={post.data.pubDate} />
         <span aria-hidden="true">·</span>
-        <span>{minutes} phút đọc</span>
+        <span>{minutes} min read</span>
       </div>
 
       <h1 class="mb-4 text-3xl font-semibold tracking-tight sm:text-2xl">
@@ -94,13 +94,16 @@ const minutes = readingTime(post.body ?? "");
           class="mb-4 text-xs font-medium uppercase tracking-widest"
           style="color: var(--text-faint);"
         >
-          Bài liên quan
+          Related posts
         </h2>
         <ul class="space-y-3">
           {related.map((r) => (
             <li>
               <a href={postUrl(r)} class="group block">
-                <span class="text-sm font-medium transition-colors group-hover:underline" style="text-underline-offset: 0.2em;">
+                <span
+                  class="text-sm font-medium transition-colors group-hover:underline"
+                  style="text-underline-offset: 0.2em;"
+                >
                   {r.data.title}
                 </span>
                 <span class="ml-2 text-xs" style="color: var(--text-faint);">
@@ -119,27 +122,28 @@ const minutes = readingTime(post.body ?? "");
       class="mb-4 text-xs font-medium uppercase tracking-widest"
       style="color: var(--text-faint);"
     >
-      Bình luận
+      Comments
     </h2>
     <Comments />
   </section>
 </BaseLayout>
 
 <script>
-  // Thêm link neo cạnh mỗi heading để chia sẻ trực tiếp tới từng mục.
-  // Astro đã sinh sẵn id cho heading lúc build, nên link này tồn tại trong HTML tĩnh.
-  document.querySelectorAll<HTMLElement>(".prose h2[id], .prose h3[id], .prose h4[id]").forEach(
-    (heading) => {
+  // Add an anchor link next to each heading so sections can be linked directly.
+  // Astro generates the heading ids at build time, so these anchors point at
+  // ids that already exist in the static HTML.
+  document
+    .querySelectorAll<HTMLElement>(".prose h2[id], .prose h3[id], .prose h4[id]")
+    .forEach((heading) => {
       const anchor = document.createElement("a");
       anchor.href = `#${heading.id}`;
       anchor.className = "heading-anchor";
       anchor.textContent = "#";
-      anchor.setAttribute("aria-label", `Liên kết tới mục ${heading.textContent ?? ""}`);
+      anchor.setAttribute("aria-label", `Link to section ${heading.textContent ?? ""}`);
       heading.appendChild(anchor);
-    }
-  );
+    });
 
-  // Bọc bảng trong khung cuộn ngang để không làm vỡ layout trên mobile
+  // Wrap tables in a horizontal scroll container so they don't break the mobile layout
   document.querySelectorAll(".prose table").forEach((table) => {
     if (table.parentElement?.classList.contains("table-wrapper")) return;
     const wrapper = document.createElement("div");

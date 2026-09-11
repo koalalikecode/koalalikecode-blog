@@ -12,7 +12,7 @@ interface Props {
   publishedTime?: Date;
   modifiedTime?: Date;
   tags?: string[];
-  /** Bỏ khung bọc mặc định khi trang tự lo layout riêng */
+  /** Skip the default wrapper when a page handles its own layout */
   bare?: boolean;
 }
 
@@ -20,7 +20,7 @@ const { bare = false, ...head } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="vi">
+<html lang="en">
   <head>
     <BaseHead {...head} />
   </head>
@@ -31,7 +31,7 @@ const { bare = false, ...head } = Astro.props;
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:px-3 focus:py-2"
       style="background: var(--bg-subtle); color: var(--text);"
     >
-      Bỏ qua, tới nội dung chính
+      Skip to main content
     </a>
 
     <Header />

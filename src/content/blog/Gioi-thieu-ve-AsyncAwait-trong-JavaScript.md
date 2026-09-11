@@ -1,6 +1,6 @@
 ---
 title: "Giới thiệu về Async/Await trong JavaScript"
-description: "Khi nhắc đến xử lý bất đồng bộ trong JavaScript, chắc ai cũng liên tưởng đến một vấn đề của việc sử dụng callback function, đó là **callback hell**, đại khái trông nó sẽ như [thế này](https://images.viblo.asia/2b67c194-4ef8-4879-a44b-410c1b4bddee.png). Qua thời gian, callback bộc lộ nhiều yếu điểm, thời gian hoàn tất tăng lên do các hàm phải \"xếp hàng\" để chờ nhau thực hiện, cấu trúc code trở nên khá rối và khó bảo trì."
+description: "Khi nhắc đến xử lý bất đồng bộ trong JavaScript, chắc ai cũng liên tưởng đến một vấn đề của việc sử dụng callback function, đó là callback hell, đại khái trông nó sẽ như thế này. Qua thời gian, callback bộc lộ nhiều yếu điểm, thời gian hoàn tất tăng lên do các hàm phải \"xếp hàng\" để chờ nhau thực hiện, cấu trúc code trở nên khá rối và khó bảo trì."
 slug: "Gioi-thieu-ve-AsyncAwait-trong-JavaScript"
 pubDate: 2023-01-12T08:01:18.051Z
 updatedDate: 2023-01-12T08:01:18.051Z

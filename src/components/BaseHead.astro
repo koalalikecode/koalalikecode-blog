@@ -4,9 +4,9 @@ import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
 interface Props {
   title?: string;
   description?: string;
-  /** Ảnh OG - truyền vào dạng URL tuyệt đối hoặc đường dẫn từ gốc site */
+  /** OG image - absolute URL, or a path from the site root */
   image?: string;
-  /** "article" cho trang bài viết, "website" cho các trang còn lại */
+  /** "article" on post pages, "website" everywhere else */
   type?: "website" | "article";
   publishedTime?: Date;
   modifiedTime?: Date;
@@ -27,7 +27,7 @@ const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 
-// JSON-LD giúp Google hiểu đây là bài viết, hiện rich result
+// JSON-LD tells Google this is an article, which enables rich results
 const jsonLd =
   type === "article"
     ? {
@@ -73,7 +73,6 @@ const jsonLd =
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:site_name" content={SITE_TITLE} />
-<meta property="og:locale" content="vi_VN" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title ?? SITE_TITLE} />
@@ -97,8 +96,8 @@ const jsonLd =
 <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 
 <script is:inline>
-  // Áp dụng theme TRƯỚC khi trang vẽ, tránh nhấp nháy nền trắng ở dark mode.
-  // Phải là inline script đồng bộ - không được defer.
+  // Apply the theme BEFORE the page paints, so dark mode never flashes white.
+  // Must stay an inline synchronous script - it cannot be deferred.
   (function () {
     try {
       var saved = localStorage.getItem("theme");
@@ -106,7 +105,7 @@ const jsonLd =
         document.documentElement.setAttribute("data-theme", saved);
       }
     } catch (e) {
-      // localStorage có thể bị chặn (chế độ riêng tư) - khi đó dùng theme hệ thống
+      // Storage can be blocked (private mode) - fall back to the system theme
     }
   })();
 </script>

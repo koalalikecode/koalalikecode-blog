@@ -2,46 +2,28 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostListItem from "../components/PostListItem.astro";
 import { getPublishedPosts, postUrl, readingTime } from "../lib/posts";
-import { AUTHOR, SITE_DESCRIPTION } from "../consts";
+import { SITE_DESCRIPTION } from "../consts";
 
 const posts = await getPublishedPosts();
 ---
 
 <BaseLayout description={SITE_DESCRIPTION}>
-  <section class="mb-14">
-    <h1 class="mb-3 text-2xl font-semibold tracking-tight">
-      Chào, tôi là {AUTHOR.handle}
-    </h1>
-    <p class="max-w-xl leading-relaxed" style="color: var(--text-muted);">
-      {AUTHOR.bio}
-    </p>
-  </section>
-
-  <section>
-    <h2
-      class="mb-2 text-xs font-medium uppercase tracking-widest"
-      style="color: var(--text-faint);"
-    >
-      Bài viết
-    </h2>
-
-    {
-      posts.length === 0 ? (
-        <p style="color: var(--text-muted);">Chưa có bài viết nào.</p>
-      ) : (
-        <div>
-          {posts.map((post) => (
-            <PostListItem
-              title={post.data.title}
-              description={post.data.description}
-              href={postUrl(post)}
-              pubDate={post.data.pubDate}
-              readingTime={readingTime(post.body ?? "")}
-              tags={post.data.tags}
-            />
-          ))}
-        </div>
-      )
-    }
-  </section>
+  {
+    posts.length === 0 ? (
+      <p style="color: var(--text-muted);">No posts yet.</p>
+    ) : (
+      <div>
+        {posts.map((post) => (
+          <PostListItem
+            title={post.data.title}
+            description={post.data.description}
+            href={postUrl(post)}
+            pubDate={post.data.pubDate}
+            readingTime={readingTime(post.body ?? "")}
+            tags={post.data.tags}
+          />
+        ))}
+      </div>
+    )
+  }
 </BaseLayout>

@@ -1,19 +1,19 @@
 ---
 /**
- * Bình luận bằng Giscus - dựa trên GitHub Discussions.
- * Không cần database, không cần chống spam, không có lỗ hổng XSS
- * vì nội dung do GitHub render trong iframe riêng.
+ * Comments via Giscus, backed by GitHub Discussions.
+ * No database, no spam handling, and no XSS surface - GitHub renders
+ * the content inside its own iframe.
  *
- * Cần làm trước khi dùng:
- *   1. Bật Discussions trong Settings của repo trên GitHub
- *   2. Cài app Giscus: https://github.com/apps/giscus
- *   3. Vào https://giscus.app lấy repoId và categoryId, điền vào dưới đây
+ * Setup before this works:
+ *   1. Enable Discussions in the repository settings on GitHub
+ *   2. Install the Giscus app: https://github.com/apps/giscus
+ *   3. Get repoId and categoryId from https://giscus.app and fill them in below
  */
 const GISCUS = {
   repo: "koalalikecode/koalalikecode-blog",
-  repoId: "", // lấy từ giscus.app
+  repoId: "", // from giscus.app
   category: "Announcements",
-  categoryId: "", // lấy từ giscus.app
+  categoryId: "", // from giscus.app
 };
 
 const configured = GISCUS.repoId !== "" && GISCUS.categoryId !== "";
@@ -21,10 +21,10 @@ const configured = GISCUS.repoId !== "" && GISCUS.categoryId !== "";
 
 {
   configured ? (
-    <div class="giscus"></div>
+    <div class="giscus" />
   ) : (
     <p class="text-sm" style="color: var(--text-muted);">
-      Bình luận chưa được cấu hình. Xem hướng dẫn trong
+      Comments are not configured yet. See the setup notes in
       <code
         class="rounded px-1 py-0.5 text-xs"
         style="background: var(--bg-subtle); border: 1px solid var(--border);"
@@ -51,7 +51,7 @@ const configured = GISCUS.repoId !== "" && GISCUS.categoryId !== "";
       data-emit-metadata="0"
       data-input-position="top"
       data-theme="preferred_color_scheme"
-      data-lang="vi"
+      data-lang="en"
       data-loading="lazy"
       crossorigin="anonymous"
       async

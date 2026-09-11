@@ -2,8 +2,7 @@
 import { SITE_TITLE, NAV_LINKS } from "../consts";
 
 const path = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === "/" ? path === "/" : path.startsWith(href);
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 ---
 
 <header
@@ -19,7 +18,7 @@ const isActive = (href: string) =>
       {SITE_TITLE}
     </a>
 
-    <nav class="flex items-center gap-1 sm:gap-2" aria-label="Điều hướng chính">
+    <nav class="flex items-center gap-1 sm:gap-2" aria-label="Main navigation">
       {
         NAV_LINKS.map((link) => (
           <a
@@ -37,7 +36,7 @@ const isActive = (href: string) =>
         href="/search"
         class="rounded-md p-2 transition-colors"
         style="color: var(--text-muted);"
-        aria-label="Tìm kiếm"
+        aria-label="Search"
       >
         <svg
           width="16"
@@ -59,7 +58,7 @@ const isActive = (href: string) =>
         type="button"
         class="rounded-md p-2 transition-colors"
         style="color: var(--text-muted);"
-        aria-label="Đổi giao diện sáng/tối"
+        aria-label="Toggle light/dark theme"
       >
         <svg
           class="block dark-hidden"
@@ -73,7 +72,8 @@ const isActive = (href: string) =>
           aria-hidden="true"
         >
           <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+          <path
+            d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
           ></path>
         </svg>
         <svg
@@ -95,8 +95,8 @@ const isActive = (href: string) =>
 </header>
 
 <style>
-  /* Đổi icon mặt trời/mặt trăng theo theme đang bật.
-     Xử lý cả 3 trạng thái: chọn sáng, chọn tối, và để hệ thống tự quyết. */
+  /* Swap sun/moon icon to match the active theme.
+     Covers all three states: explicit light, explicit dark, and follow-system. */
   :global(:root[data-theme="dark"]) .dark-hidden {
     display: none;
   }
@@ -118,7 +118,7 @@ const isActive = (href: string) =>
 
   btn?.addEventListener("click", () => {
     const root = document.documentElement;
-    // Nếu chưa chọn thủ công, suy ra theme hiện tại từ hệ thống rồi đảo ngược
+    // With no explicit choice yet, read the system preference and invert it
     const current =
       root.getAttribute("data-theme") ??
       (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -128,7 +128,7 @@ const isActive = (href: string) =>
     try {
       localStorage.setItem("theme", next);
     } catch {
-      // Bỏ qua khi trình duyệt chặn lưu trữ - theme vẫn đổi trong phiên này
+      // Storage can be blocked (private mode) - the theme still changes for this session
     }
   });
 </script>

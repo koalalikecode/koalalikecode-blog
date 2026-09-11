@@ -21,16 +21,15 @@ const { title, description, href, pubDate, readingTime, tags = [] } = Astro.prop
     >
       <FormattedDate date={pubDate} />
       <span aria-hidden="true">·</span>
-      <span>{readingTime} phút đọc</span>
+      <span>{readingTime} min read</span>
     </div>
 
-    <h2
-      class="mb-1.5 text-lg font-semibold transition-colors"
-      style="color: var(--text);"
-    >
-      <span class="bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]"
+    <h2 class="mb-1.5 text-lg font-semibold transition-colors" style="color: var(--text);">
+      <span
+        class="bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]"
         style="background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0% 1px; padding-bottom: 1px;"
-      >{title}</span>
+        >{title}</span
+      >
     </h2>
 
     <p class="line-clamp-2 text-sm leading-relaxed" style="color: var(--text-muted);">

@@ -1,17 +1,16 @@
 /**
- * Cấu hình tập trung cho toàn site.
- * Đổi SITE_URL sang domain thật trước khi deploy production.
+ * Site-wide configuration.
+ * Change SITE_URL to the real domain before deploying to production.
  */
 export const SITE_URL = "https://koalalikecode.pages.dev";
 
 export const SITE_TITLE = "koalalikecode";
 export const SITE_DESCRIPTION =
-  "Blog cá nhân về lập trình web, system design và những thứ tôi học được trên đường đi.";
+  "Notes on web development, system design and things worth writing down.";
 
 export const AUTHOR = {
-  name: "Duy Nguyễn",
+  name: "Duy Nguyen",
   handle: "koalalikecode",
-  bio: "Tôi viết về phát triển web, lập trình và cuộc sống. Ghi lại những gì mình học và xây dựng.",
 };
 
 export const SOCIALS = [
@@ -22,10 +21,9 @@ export const SOCIALS = [
 ];
 
 export const NAV_LINKS = [
-  { label: "Bài viết", href: "/" },
-  { label: "Thẻ", href: "/tags" },
-  { label: "Giới thiệu", href: "/about" },
+  { label: "Posts", href: "/" },
+  { label: "Tags", href: "/tags" },
 ];
 
-/** Số bài mỗi trang ở danh sách */
+/** Posts per page in listings */
 export const POSTS_PER_PAGE = 10;

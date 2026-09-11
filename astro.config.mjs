@@ -10,11 +10,11 @@ import { SITE_URL } from "./src/consts.ts";
 export default defineConfig({
   site: SITE_URL,
 
-  // Toàn bộ site build tĩnh - không có server chạy lúc user truy cập
+  // Fully static build - nothing runs on the server when a visitor loads a page
   output: "static",
 
   integrations: [
-    // expressiveCode phải đứng trước mdx để bắt được code block trong file .mdx
+    // expressiveCode must come before mdx so it picks up code blocks in .mdx files
     expressiveCode({
       themes: ["github-dark-dimmed", "github-light"],
       themeCssSelector: (theme) =>
@@ -37,7 +37,7 @@ export default defineConfig({
   ],
 
   markdown: {
-    // Code block đã do expressiveCode xử lý
+    // Code blocks are handled by expressiveCode
     syntaxHighlight: false,
   },
 
