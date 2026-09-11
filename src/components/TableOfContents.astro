@@ -20,8 +20,7 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
     >
       <details open>
         <summary
-          class="cursor-pointer text-xs font-medium uppercase tracking-widest"
-          style="color: var(--text-faint);"
+          class="eyebrow cursor-pointer"
         >
           Contents
         </summary>
@@ -30,7 +29,7 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
             <li class={h.depth === 3 ? "pl-4" : ""}>
               <a
                 href={`#${h.slug}`}
-                class="toc-link transition-colors hover:underline"
+                class="toc-link cursor-pointer transition-colors hover:text-[var(--accent)]"
                 style="color: var(--text-muted); text-underline-offset: 0.2em;"
               >
                 {h.text}

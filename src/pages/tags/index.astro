@@ -3,25 +3,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getTagCounts } from "../../lib/posts";
 
 const tags = await getTagCounts();
+const max = Math.max(1, ...tags.map((t) => t.count));
+
+/**
+ * Scale a tag's type size by how often it's used, so the page reads as a
+ * weighted index rather than a uniform row of pills. Kept to a narrow range
+ * (1rem - 1.6rem) so it stays restrained.
+ */
+const sizeFor = (count: number) => 1 + (count / max) * 0.6;
 ---
 
 <BaseLayout title="Tags" description="All topics on the blog.">
-  <h1 class="mb-8 text-2xl font-semibold tracking-tight">Tags</h1>
+  <header class="mb-10">
+    <h1 class="text-3xl" style="color: var(--text);">Tags</h1>
+    <p class="mt-2 text-sm" style="color: var(--text-muted);">
+      {tags.length} topics across the archive.
+    </p>
+  </header>
 
   {
     tags.length === 0 ? (
       <p style="color: var(--text-muted);">No tags yet.</p>
     ) : (
-      <ul class="flex flex-wrap gap-2.5">
+      <ul class="flex flex-wrap items-baseline gap-x-6 gap-y-4">
         {tags.map(({ tag, count }) => (
           <li>
             <a
               href={`/tags/${encodeURIComponent(tag)}`}
-              class="inline-flex items-baseline gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors hover:border-current"
-              style="border-color: var(--border); color: var(--text);"
+              class="group inline-flex cursor-pointer items-baseline gap-1.5 font-serif transition-colors hover:text-[var(--accent)]"
+              style={`font-size: ${sizeFor(count)}rem; color: var(--text);`}
             >
-              {tag}
-              <span class="text-xs" style="color: var(--text-faint);">
+              <span class="link-sweep">{tag}</span>
+              <span class="font-sans text-xs tabular-nums" style="color: var(--text-faint);">
                 {count}
               </span>
             </a>

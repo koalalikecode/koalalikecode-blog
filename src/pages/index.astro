@@ -1,10 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FeaturedPost from "../components/FeaturedPost.astro";
 import PostListItem from "../components/PostListItem.astro";
 import { getPublishedPosts, postUrl, readingTime } from "../lib/posts";
 import { SITE_DESCRIPTION } from "../consts";
 
 const posts = await getPublishedPosts();
+
+const [featured, ...rest] = posts;
+
+// Group the remaining posts by year so the list has rhythm instead of
+// being one undifferentiated stack.
+const byYear = new Map<number, typeof rest>();
+for (const post of rest) {
+  const year = post.data.pubDate.getUTCFullYear();
+  byYear.set(year, [...(byYear.get(year) ?? []), post]);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
 ---
 
 <BaseLayout description={SITE_DESCRIPTION}>
@@ -12,18 +24,44 @@ const posts = await getPublishedPosts();
     posts.length === 0 ? (
       <p style="color: var(--text-muted);">No posts yet.</p>
     ) : (
-      <div>
-        {posts.map((post) => (
-          <PostListItem
-            title={post.data.title}
-            description={post.data.description}
-            href={postUrl(post)}
-            pubDate={post.data.pubDate}
-            readingTime={readingTime(post.body ?? "")}
-            tags={post.data.tags}
-          />
-        ))}
-      </div>
+      <>
+        <FeaturedPost
+          post={featured}
+          href={postUrl(featured)}
+          readingTime={readingTime(featured.body ?? "")}
+        />
+
+        {rest.length > 0 && (
+          <section>
+            {years.map((year) => (
+              <div class="mb-10 last:mb-0">
+                {/* Year marker doubles as the section rule */}
+                <div class="mb-1 flex items-baseline gap-4">
+                  <h2 class="eyebrow" style="font-family: var(--font-sans);">
+                    {year}
+                  </h2>
+                  <span
+                    class="h-px flex-1"
+                    style="background: var(--border);"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                {byYear.get(year)!.map((post) => (
+                  <PostListItem
+                    title={post.data.title}
+                    description={post.data.description}
+                    href={postUrl(post)}
+                    pubDate={post.data.pubDate}
+                    readingTime={readingTime(post.body ?? "")}
+                    tags={post.data.tags}
+                  />
+                ))}
+              </div>
+            ))}
+          </section>
+        )}
+      </>
     )
   }
 </BaseLayout>

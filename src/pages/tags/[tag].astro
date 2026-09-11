@@ -20,12 +20,11 @@ const { tag, posts } = Astro.props;
   <div class="mb-8">
     <a
       href="/tags"
-      class="mb-3 inline-block text-sm transition-colors hover:underline"
-      style="color: var(--text-muted); text-underline-offset: 0.2em;"
+      class="eyebrow mb-4 inline-flex cursor-pointer items-center gap-1.5 transition-colors hover:text-[var(--accent)]"
     >
-      ← All tags
+      <span aria-hidden="true">←</span> All tags
     </a>
-    <h1 class="text-2xl font-semibold tracking-tight">{tag}</h1>
+    <h1 class="text-3xl" style="color: var(--text);">#{tag}</h1>
     <p class="mt-1 text-sm" style="color: var(--text-muted);">
       {posts.length}
       {posts.length === 1 ? "post" : "posts"}

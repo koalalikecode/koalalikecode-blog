@@ -12,7 +12,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
   <div class="mx-auto flex h-14 max-w-3xl items-center justify-between px-4 sm:px-6">
     <a
       href="/"
-      class="font-semibold tracking-tight transition-opacity hover:opacity-70"
+      class="flex min-h-11 cursor-pointer items-center font-serif text-lg font-medium tracking-tight transition-colors hover:text-[var(--accent)]"
       style="color: var(--text);"
     >
       {SITE_TITLE}
@@ -23,7 +23,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         NAV_LINKS.map((link) => (
           <a
             href={link.href}
-            class="rounded-md px-2 py-1 text-sm transition-colors sm:px-3"
+            class="flex min-h-11 cursor-pointer items-center rounded-md px-2 text-sm transition-colors hover:text-[var(--accent)] sm:px-3"
             style={`color: ${isActive(link.href) ? "var(--text)" : "var(--text-muted)"};`}
             aria-current={isActive(link.href) ? "page" : undefined}
           >
@@ -34,7 +34,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
 
       <a
         href="/search"
-        class="rounded-md p-2 transition-colors"
+        class="flex size-11 cursor-pointer items-center justify-center rounded-md transition-colors hover:text-[var(--accent)]"
         style="color: var(--text-muted);"
         aria-label="Search"
       >
@@ -56,7 +56,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
       <button
         id="theme-toggle"
         type="button"
-        class="rounded-md p-2 transition-colors"
+        class="flex size-11 cursor-pointer items-center justify-center rounded-md transition-colors hover:text-[var(--accent)]"
         style="color: var(--text-muted);"
         aria-label="Toggle light/dark theme"
       >

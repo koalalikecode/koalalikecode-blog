@@ -5,7 +5,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import TableOfContents from "../../components/TableOfContents.astro";
 import Comments from "../../components/Comments.astro";
-import { getPublishedPosts, postUrl, readingTime, getRelatedPosts } from "../../lib/posts";
+import {
+  getPublishedPosts,
+  postUrl,
+  readingTime,
+  getRelatedPosts,
+  getAdjacentPosts,
+} from "../../lib/posts";
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -19,6 +25,7 @@ export async function getStaticPaths() {
 const { post, all } = Astro.props;
 const { Content, headings } = await render(post);
 const related = getRelatedPosts(post, all);
+const { newer, older } = getAdjacentPosts(post, all);
 const minutes = readingTime(post.body ?? "");
 ---
 
@@ -30,40 +37,54 @@ const minutes = readingTime(post.body ?? "");
   modifiedTime={post.data.updatedDate}
   tags={post.data.tags}
 >
+  <div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
   <article>
-    <header class="mb-8">
+    <header class="mb-10">
+      <a
+        href="/"
+        class="eyebrow mb-6 -ml-1 inline-flex min-h-11 cursor-pointer items-center gap-1.5 px-1 transition-colors hover:text-[var(--accent)]"
+      >
+        <span aria-hidden="true">←</span> All posts
+      </a>
+
+      <h1 class="text-4xl leading-[1.15] sm:text-3xl" style="color: var(--text);">
+        {post.data.title}
+      </h1>
+
+      <p
+        class="mt-4 font-serif text-lg leading-relaxed"
+        style="color: var(--text-muted);"
+      >
+        {post.data.description}
+      </p>
+
       <div
-        class="mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs"
-        style="color: var(--text-faint);"
+        class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 border-t pt-4 text-xs"
+        style="border-color: var(--border); color: var(--text-faint);"
       >
         <FormattedDate date={post.data.pubDate} />
         <span aria-hidden="true">·</span>
         <span>{minutes} min read</span>
+
+        {
+          post.data.tags.length > 0 && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span class="flex flex-wrap gap-2">
+                {post.data.tags.map((tag) => (
+                  <a
+                    href={`/tags/${encodeURIComponent(tag)}`}
+                    class="cursor-pointer transition-colors hover:text-[var(--accent)]"
+                  >
+                    #{tag}
+                  </a>
+                ))}
+              </span>
+            </>
+          )
+        }
       </div>
-
-      <h1 class="mb-4 text-3xl font-semibold tracking-tight sm:text-2xl">
-        {post.data.title}
-      </h1>
-
-      <p class="text-base leading-relaxed" style="color: var(--text-muted);">
-        {post.data.description}
-      </p>
-
-      {
-        post.data.tags.length > 0 && (
-          <div class="mt-5 flex flex-wrap gap-2">
-            {post.data.tags.map((tag) => (
-              <a
-                href={`/tags/${encodeURIComponent(tag)}`}
-                class="rounded-full border px-2.5 py-0.5 text-xs transition-colors"
-                style="border-color: var(--border); color: var(--text-muted);"
-              >
-                {tag}
-              </a>
-            ))}
-          </div>
-        )
-      }
     </header>
 
     {
@@ -87,26 +108,65 @@ const minutes = readingTime(post.body ?? "");
     </div>
   </article>
 
+  {/* Prev/next keeps the reader moving instead of dead-ending at the footer */}
+  {
+    (newer || older) && (
+      <nav
+        class="mt-16 grid gap-4 border-t pt-8 sm:grid-cols-2"
+        style="border-color: var(--border);"
+        aria-label="Post navigation"
+      >
+        {older ? (
+          <a
+            href={postUrl(older)}
+            class="group cursor-pointer rounded-lg border p-4 transition-colors hover:border-[var(--accent)]"
+            style="border-color: var(--border);"
+          >
+            <span class="eyebrow">← Older</span>
+            <span
+              class="mt-1.5 block font-serif text-base leading-snug"
+              style="color: var(--text);"
+            >
+              {older.data.title}
+            </span>
+          </a>
+        ) : (
+          <span />
+        )}
+
+        {newer && (
+          <a
+            href={postUrl(newer)}
+            class="group cursor-pointer rounded-lg border p-4 text-right transition-colors hover:border-[var(--accent)] sm:text-right"
+            style="border-color: var(--border);"
+          >
+            <span class="eyebrow">Newer →</span>
+            <span
+              class="mt-1.5 block font-serif text-base leading-snug"
+              style="color: var(--text);"
+            >
+              {newer.data.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+
   {
     related.length > 0 && (
-      <section class="mt-16 border-t pt-8" style="border-color: var(--border);">
-        <h2
-          class="mb-4 text-xs font-medium uppercase tracking-widest"
-          style="color: var(--text-faint);"
-        >
+      <section class="mt-14 border-t pt-8" style="border-color: var(--border);">
+        <h2 class="eyebrow mb-4" style="font-family: var(--font-sans);">
           Related posts
         </h2>
         <ul class="space-y-3">
           {related.map((r) => (
             <li>
-              <a href={postUrl(r)} class="group block">
-                <span
-                  class="text-sm font-medium transition-colors group-hover:underline"
-                  style="text-underline-offset: 0.2em;"
-                >
-                  {r.data.title}
+              <a href={postUrl(r)} class="group flex cursor-pointer items-baseline gap-3">
+                <span class="font-serif text-base" style="color: var(--text);">
+                  <span class="link-sweep">{r.data.title}</span>
                 </span>
-                <span class="ml-2 text-xs" style="color: var(--text-faint);">
+                <span class="shrink-0 text-xs" style="color: var(--text-faint);">
                   <FormattedDate date={r.data.pubDate} />
                 </span>
               </a>
@@ -117,13 +177,8 @@ const minutes = readingTime(post.body ?? "");
     )
   }
 
-  <section class="mt-16 border-t pt-8" style="border-color: var(--border);">
-    <h2
-      class="mb-4 text-xs font-medium uppercase tracking-widest"
-      style="color: var(--text-faint);"
-    >
-      Comments
-    </h2>
+  <section class="mt-14 border-t pt-8" style="border-color: var(--border);">
+    <h2 class="eyebrow mb-4" style="font-family: var(--font-sans);">Comments</h2>
     <Comments />
   </section>
 </BaseLayout>
@@ -151,4 +206,33 @@ const minutes = readingTime(post.body ?? "");
     table.parentNode?.insertBefore(wrapper, table);
     wrapper.appendChild(table);
   });
+
+  // Reading progress bar.
+  // Driven by a scaleX transform so the browser composites it without relayout,
+  // and updated inside requestAnimationFrame so it runs at most once per frame.
+  const bar = document.getElementById("read-progress");
+  const article = document.querySelector("article");
+
+  if (bar && article && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let ticking = false;
+
+    const update = () => {
+      const start = article.offsetTop;
+      const scrollable = article.offsetHeight - window.innerHeight;
+      const progress =
+        scrollable <= 0 ? 1 : Math.min(1, Math.max(0, (window.scrollY - start) / scrollable));
+      bar.style.transform = `scaleX(${progress})`;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+  }
 </script>

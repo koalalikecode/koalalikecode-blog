@@ -15,8 +15,7 @@ const year = new Date().getFullYear();
         SOCIALS.map((s) => (
           <a
             href={s.href}
-            class="transition-colors hover:underline"
-            style="text-underline-offset: 0.2em;"
+            class="cursor-pointer transition-colors hover:text-[var(--accent)]"
             rel={s.href.startsWith("http") ? "me noopener" : undefined}
             target={s.href.startsWith("http") ? "_blank" : undefined}
           >

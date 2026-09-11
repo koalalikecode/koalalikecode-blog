@@ -46,6 +46,22 @@ export async function getTagCounts(): Promise<{ tag: string; count: number }[]> 
 }
 
 /**
+ * The posts either side of this one in reverse-chronological order.
+ * `newer` is the one published after it, `older` the one before.
+ */
+export function getAdjacentPosts(
+  current: Post,
+  all: Post[]
+): { newer: Post | null; older: Post | null } {
+  const i = all.findIndex((p) => p.id === current.id);
+  if (i === -1) return { newer: null, older: null };
+  return {
+    newer: all[i - 1] ?? null,
+    older: all[i + 1] ?? null,
+  };
+}
+
+/**
  * Related posts ranked by how many tags they share with the current one.
  * Falls back to the most recent posts when there aren't enough tag matches.
  */

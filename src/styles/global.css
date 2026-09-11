@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 /*
-  Design system - minimalism, optimised for reading.
-  Rules: neutral background, exactly ONE accent colour, no gradients, no stacked shadows.
-  Visual hierarchy comes from whitespace and type scale, not from colour.
+  Design system - editorial minimalism (Swiss modernism).
+
+  The interest comes from three things, not from decoration:
+    1. Type contrast - a serif display face against a sans UI face
+    2. Scale contrast - a real modular scale, not one size everywhere
+    3. Structure - an asymmetric grid and clear rhythm
+
+  Still exactly ONE accent colour, no gradients, no stacked shadows.
 */
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: "Newsreader", ui-serif, Georgia, Cambria, serif;
+  --font-serif: "Newsreader", ui-serif, Georgia, Cambria, "Times New Roman", serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", monospace;
 
   /* Comfortable measure for reading */
@@ -18,35 +23,40 @@
 /*
   Palette defined on :root (light) and overridden for dark.
   Every colour has a base definition here - none exists only inside a media query.
+
+  Accent is rust/terracotta: warm and editorial rather than default-blue, and it
+  clears WCAG AA in both themes (5.05:1 on light, 8.75:1 on dark).
 */
 :root {
   color-scheme: light;
 
   --bg: #fcfcfc;
-  --bg-subtle: #f4f4f5;
+  --bg-subtle: #f5f4f2;
   --text: #18181b;
-  --text-muted: #71717a;
-  --text-faint: #a1a1aa;
-  --border: #e4e4e7;
-  --border-strong: #d4d4d8;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --selection: #dbeafe;
+  --text-muted: #6b6a67;
+  --text-faint: #76746f;
+  --border: #e5e3df;
+  --border-strong: #d2cfca;
+  --accent: #c2410c;
+  --accent-hover: #9a3412;
+  --accent-wash: #fdf3ee;
+  --selection: #fbe3d6;
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
 
   --bg: #0a0a0a;
-  --bg-subtle: #161618;
-  --text: #ededed;
-  --text-muted: #a1a1aa;
-  --text-faint: #71717a;
-  --border: #262628;
-  --border-strong: #3f3f46;
-  --accent: #60a5fa;
-  --accent-hover: #93c5fd;
-  --selection: #1e3a5f;
+  --bg-subtle: #171716;
+  --text: #ededeb;
+  --text-muted: #a1a09b;
+  --text-faint: #858480;
+  --border: #262624;
+  --border-strong: #3f3f3b;
+  --accent: #fb923c;
+  --accent-hover: #fdba74;
+  --accent-wash: #1c1410;
+  --selection: #3a2113;
 }
 
 /* Visitor left the theme on "system" and the OS is in dark mode */
@@ -55,15 +65,16 @@
     color-scheme: dark;
 
     --bg: #0a0a0a;
-    --bg-subtle: #161618;
-    --text: #ededed;
-    --text-muted: #a1a1aa;
-    --text-faint: #71717a;
-    --border: #262628;
-    --border-strong: #3f3f46;
-    --accent: #60a5fa;
-    --accent-hover: #93c5fd;
-    --selection: #1e3a5f;
+    --bg-subtle: #171716;
+    --text: #ededeb;
+    --text-muted: #a1a09b;
+    --text-faint: #858480;
+    --border: #262624;
+    --border-strong: #3f3f3b;
+    --accent: #fb923c;
+    --accent-hover: #fdba74;
+    --accent-wash: #1c1410;
+    --selection: #3a2113;
   }
 }
 
@@ -114,13 +125,14 @@
     text-decoration: none;
   }
 
+  /* Serif display face carries the editorial character */
   h1,
   h2,
-  h3,
-  h4 {
-    font-weight: 650;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
     text-wrap: balance;
   }
 
@@ -135,12 +147,58 @@
   }
 }
 
-/*
-  Typography for article content.
-  Hand-written instead of @tailwindcss/typography for full control
-  and to avoid shipping unused CSS.
-*/
 @layer components {
+  /*
+    Small caps label used for section markers ("Writing", "Contents", year rows).
+    A repeated typographic motif is what makes a minimal layout feel designed.
+  */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /*
+    Underline that sweeps in on hover.
+    Animates background-size, which the compositor handles cheaply,
+    instead of animating width or a layout property.
+  */
+  .link-sweep {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.3s ease;
+    padding-bottom: 1px;
+  }
+
+  .group:hover .link-sweep,
+  .link-sweep:hover {
+    background-size: 100% 1px;
+  }
+
+  /* Reading progress bar pinned to the top of article pages */
+  .read-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    background: var(--accent);
+    z-index: 60;
+    will-change: transform;
+  }
+
+  /*
+    Typography for article content.
+    Hand-written instead of @tailwindcss/typography for full control
+    and to avoid shipping unused CSS.
+  */
   .prose {
     font-size: 1.0625rem;
     line-height: 1.75;
@@ -153,21 +211,23 @@
 
   .prose h2 {
     margin-top: 2.5em;
-    margin-bottom: 0.75em;
-    font-size: 1.5rem;
+    margin-bottom: 0.6em;
+    font-size: 1.65rem;
     scroll-margin-top: 5rem;
   }
 
   .prose h3 {
     margin-top: 2em;
-    margin-bottom: 0.6em;
-    font-size: 1.2rem;
+    margin-bottom: 0.5em;
+    font-size: 1.3rem;
     scroll-margin-top: 5rem;
   }
 
   .prose h4 {
     margin-top: 1.6em;
-    font-size: 1.05rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   /* Anchor link beside a heading - only visible on heading hover */
@@ -175,7 +235,9 @@
     opacity: 0;
     margin-left: 0.4em;
     color: var(--text-faint);
+    font-family: var(--font-sans);
     font-weight: 400;
+    font-size: 0.75em;
     transition: opacity 0.15s ease;
   }
 
@@ -190,7 +252,7 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
     text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
-    transition: text-decoration-color 0.15s ease;
+    transition: text-decoration-color 0.2s ease;
   }
 
   .prose a:not(.heading-anchor):hover {
@@ -219,14 +281,21 @@
   }
 
   .prose li::marker {
-    color: var(--text-faint);
+    color: var(--accent);
   }
 
+  /* Pull-quote treatment: serif, larger, accent rule */
   .prose blockquote {
-    border-left: 2px solid var(--border-strong);
-    padding-left: 1.1em;
+    border-left: 2px solid var(--accent);
+    padding-left: 1.25em;
+    font-family: var(--font-serif);
+    font-size: 1.15em;
+    line-height: 1.6;
     color: var(--text-muted);
-    font-style: italic;
+  }
+
+  .prose blockquote p {
+    margin-top: 0.5em;
   }
 
   /* Inline code - distinguished by a subtle background, not by the accent colour */
@@ -246,10 +315,18 @@
     margin-inline: auto;
   }
 
+  /* Asterism instead of a plain rule - a quiet editorial flourish */
   .prose hr {
     border: 0;
-    border-top: 1px solid var(--border);
-    margin-block: 2.5em;
+    margin-block: 3em;
+    text-align: center;
+  }
+
+  .prose hr::before {
+    content: "* * *";
+    letter-spacing: 0.6em;
+    color: var(--text-faint);
+    font-size: 0.9rem;
   }
 
   /* Tables scroll horizontally on mobile instead of breaking the layout */

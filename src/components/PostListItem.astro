@@ -13,43 +13,46 @@ interface Props {
 const { title, description, href, pubDate, readingTime, tags = [] } = Astro.props;
 ---
 
-<article class="group border-b py-6 first:pt-0" style="border-color: var(--border);">
-  <a href={href} class="block">
-    <div
-      class="mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs"
-      style="color: var(--text-faint);"
-    >
-      <FormattedDate date={pubDate} />
-      <span aria-hidden="true">·</span>
-      <span>{readingTime} min read</span>
+{/*
+  Asymmetric two-column grid on desktop: date rail on the left, content on the right.
+  The rail gives the list a spine to scan down, which a flat stack lacks.
+  Collapses to a single column below the sm breakpoint.
+*/}
+<article class="group border-b" style="border-color: var(--border);">
+  <a
+    href={href}
+    class="grid cursor-pointer grid-cols-1 gap-x-8 gap-y-1 py-6 sm:grid-cols-[7rem_1fr]"
+  >
+    <div class="pt-1">
+      <span class="text-xs tabular-nums" style="color: var(--text-faint);">
+        <FormattedDate date={pubDate} />
+      </span>
     </div>
 
-    <h2 class="mb-1.5 text-lg font-semibold transition-colors" style="color: var(--text);">
-      <span
-        class="bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]"
-        style="background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0% 1px; padding-bottom: 1px;"
-        >{title}</span
-      >
-    </h2>
+    <div class="min-w-0">
+      <h3 class="text-xl leading-snug" style="color: var(--text);">
+        <span class="link-sweep">{title}</span>
+      </h3>
 
-    <p class="line-clamp-2 text-sm leading-relaxed" style="color: var(--text-muted);">
-      {description}
-    </p>
-  </a>
+      <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed" style="color: var(--text-muted);">
+        {description}
+      </p>
 
-  {
-    tags.length > 0 && (
-      <div class="mt-3 flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <a
-            href={`/tags/${encodeURIComponent(tag)}`}
-            class="rounded-full border px-2.5 py-0.5 text-xs transition-colors"
-            style="border-color: var(--border); color: var(--text-muted);"
-          >
-            {tag}
-          </a>
-        ))}
+      <div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span class="text-xs" style="color: var(--text-faint);">{readingTime} min read</span>
+        {
+          tags.length > 0 && (
+            <>
+              <span class="text-xs" style="color: var(--text-faint);" aria-hidden="true">
+                ·
+              </span>
+              <span class="text-xs" style="color: var(--text-faint);">
+                {tags.join(", ")}
+              </span>
+            </>
+          )
+        }
       </div>
-    )
-  }
+    </div>
+  </a>
 </article>

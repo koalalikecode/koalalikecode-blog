@@ -4,22 +4,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout title="Page not found" description="That page does not exist.">
   <div class="py-16 text-center">
-    <p class="mb-2 text-sm font-medium" style="color: var(--text-faint);">404</p>
-    <h1 class="mb-3 text-2xl font-semibold tracking-tight">Page not found</h1>
+    <p class="eyebrow mb-3" style="color: var(--accent);">Error 404</p>
+    <h1 class="mb-3 text-4xl" style="color: var(--text);">Page not found</h1>
     <p class="mb-8" style="color: var(--text-muted);">
       That page does not exist, or it has moved somewhere else.
     </p>
     <div class="flex flex-wrap justify-center gap-3">
       <a
         href="/"
-        class="rounded-md border px-4 py-2 text-sm transition-colors"
+        class="cursor-pointer rounded-md border px-4 py-2 text-sm transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
         style="border-color: var(--border); color: var(--text);"
       >
         Back home
       </a>
       <a
         href="/search"
-        class="rounded-md px-4 py-2 text-sm transition-colors"
+        class="cursor-pointer rounded-md px-4 py-2 text-sm transition-colors hover:text-[var(--accent)]"
         style="color: var(--text-muted);"
       >
         Search

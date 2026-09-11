@@ -3,7 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Search" description="Search the blog.">
-  <h1 class="mb-6 text-2xl font-semibold tracking-tight">Search</h1>
+  <header class="mb-8">
+    <h1 class="text-3xl" style="color: var(--text);">Search</h1>
+    <p class="mt-2 text-sm" style="color: var(--text-muted);">Full-text search across every post.</p>
+  </header>
 
   <div id="search"></div>
 
