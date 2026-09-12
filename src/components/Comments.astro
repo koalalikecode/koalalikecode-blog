@@ -64,46 +64,43 @@ const configured = GISCUS.repoId !== "" && GISCUS.categoryId !== "";
   )
 }
 
-{
-  configured && (
-    <script>
-      {`
-      // Giscus renders in an iframe on its own origin, so it cannot read this
-      // page's theme. Push the current theme to it on load and on every toggle,
-      // otherwise the comment box stays light while the site is dark.
-      (function () {
-        var ORIGIN = "https://giscus.app";
+{/*
+  This script stays OUTSIDE the `configured &&` expression on purpose.
+  Astro compiles <script> tags separately from the template, and one placed
+  inside a conditional expression is dropped from the output entirely - which
+  is exactly what happened the first time. Guarding inside the script instead
+  keeps it in the bundle and costs nothing on pages with no comments.
+*/}
+<script>
+  // Giscus renders in an iframe on its own origin, so it cannot read this
+  // page's theme. Push the current theme to it on load and on every toggle,
+  // otherwise the comment box stays light while the site is dark.
+  const ORIGIN = "https://giscus.app";
 
-        function currentTheme() {
-          var explicit = document.documentElement.getAttribute("data-theme");
-          if (explicit === "light" || explicit === "dark") return explicit;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
+  function currentTheme(): "light" | "dark" {
+    const explicit = document.documentElement.getAttribute("data-theme");
+    if (explicit === "light" || explicit === "dark") return explicit;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
 
-        function frame() {
-          return document.querySelector("iframe.giscus-frame");
-        }
+  function pushTheme(theme: string) {
+    const frame = document.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
+    frame?.contentWindow?.postMessage({ giscus: { setConfig: { theme } } }, ORIGIN);
+  }
 
-        function push(theme) {
-          var f = frame();
-          if (!f || !f.contentWindow) return false;
-          f.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, ORIGIN);
-          return true;
-        }
+  // Only wire up on pages that actually render the widget
+  if (document.querySelector(".giscus")) {
+    // The iframe is created asynchronously by client.js, so wait for its ready
+    // message rather than guessing at a timeout.
+    window.addEventListener("message", (event: MessageEvent) => {
+      if (event.origin !== ORIGIN) return;
+      if (!event.data || typeof event.data !== "object" || !("giscus" in event.data)) return;
+      pushTheme(currentTheme());
+    });
 
-        // The iframe is created asynchronously by client.js, so wait for the
-        // ready message rather than guessing at a timeout.
-        window.addEventListener("message", function (event) {
-          if (event.origin !== ORIGIN) return;
-          if (!event.data || !event.data.giscus) return;
-          push(currentTheme());
-        });
-
-        document.addEventListener("themechange", function (event) {
-          push(event.detail && event.detail.theme ? event.detail.theme : currentTheme());
-        });
-      })();
-      `}
-    </script>
-  )
-}
+    document.addEventListener("themechange", (event) => {
+      const detail = (event as CustomEvent<{ theme?: string }>).detail;
+      pushTheme(detail?.theme ?? currentTheme());
+    });
+  }
+</script>
