@@ -73,12 +73,32 @@ src/
 migration/           archived data from the old MongoDB blog
 ```
 
-## Before deploying
+## Deploying
 
-1. Set `SITE_URL` in `src/consts.ts` to the real domain
-2. Update the `Sitemap:` line in `public/robots.txt` to match
-3. Enable Discussions on GitHub, install the [Giscus app](https://github.com/apps/giscus), and fill `repoId` / `categoryId` into `src/components/Comments.astro`
-4. Add a default OG image at `public/og-default.png`
+Hosted on Cloudflare Workers with static assets, configured in `wrangler.jsonc`.
+Workers rather than Pages because Cloudflare now directs new projects there —
+Pages still runs, but feature work has moved to Workers.
+
+A purely static site needs no Worker script: Cloudflare serves the built files
+in `dist/` directly.
+
+```bash
+npm run build
+npx wrangler deploy            # manual deploy
+npx wrangler deploy --dry-run  # validate config without uploading
+```
+
+For automatic deploys, connect the repository under **Workers & Pages → your
+Worker → Settings → Builds**, with build command `npm run build`, output
+directory `dist`, and the environment variable `NODE_VERSION=22` (Astro 7
+requires Node 20 or newer).
+
+### Before the first deploy
+
+1. Set `SITE_URL` in `src/consts.ts` to the real domain, and match the
+   `Sitemap:` line in `public/robots.txt`
+2. Install the [Giscus app](https://github.com/apps/giscus) on the repository —
+   Discussions is already enabled and the ids are already wired up
 
 ## History
 

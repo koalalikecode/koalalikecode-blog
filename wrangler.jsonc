@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Becomes the hostname: koalalikecode.workers.dev
+  "name": "koalalikecode",
+  "compatibility_date": "2026-09-12",
+
+  // A purely static site needs no Worker script at all - Cloudflare serves the
+  // built files directly. Astro writes everything to dist/, including the
+  // Pagefind search index generated after the Astro build.
+  "assets": {
+    "directory": "./dist",
+
+    // Serve the nearest 404.html with a real 404 status for unknown paths.
+    // The default would return a bare 404 with no page, and
+    // "single-page-application" is wrong here: that returns 200 + index.html
+    // for every miss, which would tell search engines that every broken URL
+    // is a valid page.
+    "not_found_handling": "404-page"
+  },
+
+  // Keep deploys observable without a Worker script
+  "observability": {
+    "enabled": true
+  }
+}
