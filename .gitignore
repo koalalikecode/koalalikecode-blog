@@ -26,3 +26,7 @@ pnpm-debug.log*
 .playwright-mcp/
 .vercel
 .netlify
+
+# ảnh chụp màn hình tạm khi kiểm thử
+/home.png
+*.playwright.png
