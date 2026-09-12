@@ -130,5 +130,9 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     } catch {
       // Storage can be blocked (private mode) - the theme still changes for this session
     }
+
+    // Anything rendering in its own document (the Giscus iframe) cannot see our
+    // CSS variables, so it has to be told about the change explicitly.
+    document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: next } }));
   });
 </script>
