@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getTagCounts } from "../../lib/posts";
+import { getTagCounts, tagUrl } from "../../lib/posts";
 
 const tags = await getTagCounts();
 const max = Math.max(1, ...tags.map((t) => t.count));
@@ -29,7 +29,7 @@ const sizeFor = (count: number) => 1 + (count / max) * 0.6;
         {tags.map(({ tag, count }) => (
           <li>
             <a
-              href={`/tags/${encodeURIComponent(tag)}`}
+              href={tagUrl(tag)}
               class="group inline-flex cursor-pointer items-baseline gap-1.5 font-serif transition-colors hover:text-[var(--accent)]"
               style={`font-size: ${sizeFor(count)}rem; color: var(--text);`}
             >

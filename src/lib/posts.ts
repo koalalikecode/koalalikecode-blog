@@ -13,9 +13,22 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-/** Post URL. Keeps the old blog's /blogs/ prefix so existing links and SEO survive. */
+/**
+ * Post URL. Keeps the old blog's /blogs/ prefix so existing links and SEO survive.
+ *
+ * The trailing slash matters in production: Astro emits each page as
+ * <route>/index.html, and Cloudflare serves that at "<route>/" while 307-ing
+ * "<route>" to it. Linking without the slash would cost an extra round trip on
+ * every internal navigation and disagree with the canonical URL and sitemap,
+ * which both carry the slash. Old links without it still work via that redirect.
+ */
 export function postUrl(post: Post): string {
-  return `/blogs/${post.data.slug}`;
+  return `/blogs/${post.data.slug}/`;
+}
+
+/** Tag archive URL. Trailing slash for the same reason as postUrl. */
+export function tagUrl(tag: string): string {
+  return `/tags/${encodeURIComponent(tag)}/`;
 }
 
 /**

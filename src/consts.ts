@@ -2,7 +2,7 @@
  * Site-wide configuration.
  * Change SITE_URL to the real domain before deploying to production.
  */
-export const SITE_URL = "https://koalalikecode.pages.dev";
+export const SITE_URL = "https://koalalikecode.duykhanhchi1993.workers.dev";
 
 export const SITE_TITLE = "koalalikecode";
 export const SITE_DESCRIPTION =
@@ -22,7 +22,7 @@ export const SOCIALS = [
 
 export const NAV_LINKS = [
   { label: "Posts", href: "/" },
-  { label: "Tags", href: "/tags" },
+  { label: "Tags", href: "/tags/" },
 ];
 
 /** Posts per page in listings */

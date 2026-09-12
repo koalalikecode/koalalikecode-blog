@@ -11,6 +11,7 @@ import {
   readingTime,
   getRelatedPosts,
   getAdjacentPosts,
+  tagUrl,
 } from "../../lib/posts";
 
 export async function getStaticPaths() {
@@ -74,7 +75,7 @@ const minutes = readingTime(post.body ?? "");
               <span class="flex flex-wrap gap-2">
                 {post.data.tags.map((tag) => (
                   <a
-                    href={`/tags/${encodeURIComponent(tag)}`}
+                    href={tagUrl(tag)}
                     class="cursor-pointer transition-colors hover:text-[var(--accent)]"
                   >
                     #{tag}

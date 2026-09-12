@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://koalalikecode.pages.dev/sitemap-index.xml
+Sitemap: https://koalalikecode.duykhanhchi1993.workers.dev/sitemap-index.xml
