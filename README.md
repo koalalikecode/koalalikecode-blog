@@ -44,8 +44,25 @@ connection at all.
 
 ## Deploying this
 
-In the Vercel project, set the production branch to `legacy-redirect`. There is
-nothing to build: no `package.json`, no framework, just static configuration.
+In the Vercel project, set the production branch to `legacy-redirect` under
+**Settings → Environments → Production → Branch Tracking**. That setting used to
+live under Settings → Git and most guides still point there.
+
+### Why `framework: null` is in the config
+
+Removing `package.json` is not enough on its own. The Vercel project was created
+as a Next.js project, and that framework preset is stored on the project, not in
+the repository — so the first build here still ran `next build` and failed with
+"No Next.js version detected".
+
+`framework: null` overrides the stored preset from the repository, along with
+empty install and build commands, so nothing is built and the files are served
+as they are. Keeping it in the config rather than changing the dashboard means
+the branch deploys correctly on its own, with no setup step to remember.
+
+`index.html` exists only as a fallback. Every path is covered by a redirect, so
+it is reached only if a rule fails to match; it carries a meta refresh as a
+second line of defence and `noindex` so it never competes with the real site.
 
 ## When the site moves again
 
